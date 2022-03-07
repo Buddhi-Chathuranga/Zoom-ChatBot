@@ -24,8 +24,9 @@ app.get('/', (req, res) => {
 
 app.get('/tet', (req, res) => {
     pg.query('SELECT * FROM chatbot_token', (error, results) => {
-      res.send('test')
+      res.send('test 1')
     })
+    res.send('test 2')
 })
 
 
