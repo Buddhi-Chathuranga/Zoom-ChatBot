@@ -19,6 +19,24 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Unsplash Chatbot for Zoom!')
 })
 
+
+
+
+app.get('/authorize', (req, res) => {
+    pg.query('SELECT * FROM chatbot_token', (error, results) => {
+      if (error) {
+        console.log('Error getting chatbot_token from database.', error)
+      } else {
+        if (results.rows[0].expires_on > (new Date().getTime() / 1000)) {
+          getPhoto(results.rows[0].token)
+        } else {
+          getChatbotToken()
+        }
+      }
+    })
+})
+
+
 app.get('/authorize', (req, res) => {
   res.redirect('https://zoom.us/launch/chat?jid=robot_' + process.env.zoom_bot_jid)
 })
