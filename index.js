@@ -24,15 +24,7 @@ app.get('/', (req, res) => {
 
 app.get('/authorize', (req, res) => {
     pg.query('SELECT * FROM chatbot_token', (error, results) => {
-      if (error) {
-        console.log('Error getting chatbot_token from database.', error)
-      } else {
-        if (results.rows[0].expires_on > (new Date().getTime() / 1000)) {
-          getPhoto(results.rows[0].token)
-        } else {
-          getChatbotToken()
-        }
-      }
+      res.send('test')
     })
 })
 
