@@ -16,7 +16,7 @@ const port = process.env.PORT || 4000
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the Unsplash Chatbot for Zoom!')
+  res.send('Welcome to the Unsplash Chatbot for Zoom! by Buddhi')
 })
 
 
