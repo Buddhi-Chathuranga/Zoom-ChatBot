@@ -22,12 +22,12 @@ app.get('/', (req, res) => {
 
 
 
-app.get('/tet', (req, res) => {
-  res.send('test 1 ='+ process.env.DATABASE_URL)
-    // pg.query('SELECT * FROM chatbot_token', (error, results) => {
-    //   res.send('test 2')
-    // })
-    // res.send('test 3')
+app.get('/test', (req, res) => {
+  //res.send('test 1 ='+ process.env.DATABASE_URL)
+    pg.query('SELECT * FROM chatbot_token', (error, results) => {
+      res.send('test 2')
+    })
+    res.send('test 3')
 })
 
 
