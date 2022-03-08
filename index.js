@@ -23,27 +23,13 @@ app.get('/', (req, res) => {
 
 
 app.get('/test', (req, res) => {
-  //res.send('test 1 ='+ process.env.DATABASE_URL)
-    // pg.query('SELECT * FROM chatbot_token', (error, results) => {
-    //   res.send('test 2')
-    // })
-    // res.send('test 3')
-    const { Client } = require('pg');
-
-    const client = new Client({
-      connectionString: process.env.DATABASE_URL,
-      ssl: true,
+  pg.connect(connectionString, function(err, client, done) {
+    client.query('SELECT * FROM chatbot_token', function(err, result) {
+       done();
+       if(err) return console.error(err);
+       console.log(result.rows);
     });
-
-    client.connect();
-
-    client.query('SELECT * FROM chatbot_token;', (err, res) => {
-      if (err) throw err;
-      for (let row of res.rows) {
-        console.log(JSON.stringify(row));
-      }
-      client.end();
-    });
+ });
 })
 
 
