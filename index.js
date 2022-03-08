@@ -28,20 +28,22 @@ app.get('/test', (req, res) => {
     //   res.send('test 2')
     // })
     // res.send('test 3')
-    const pg = require('pg');
-      const R = require('ramda');
+    const { Client } = require('pg');
 
-      const cs = process.env.DATABASE_URL;
+    const client = new Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: true,
+    });
 
-      const client = new pg.Client(cs);
-      client.connect();
+    client.connect();
 
-      client.query('SELECT 1 + 4').then(res => {
-
-          const result = R.head(R.values(R.head(res.rows)));
-
-          console.log(result);
-      }).finally(() => client.end());
+    client.query('SELECT * FROM chatbot_token;', (err, res) => {
+      if (err) throw err;
+      for (let row of res.rows) {
+        console.log(JSON.stringify(row));
+      }
+      client.end();
+    });
 })
 
 
