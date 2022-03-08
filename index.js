@@ -24,10 +24,24 @@ app.get('/', (req, res) => {
 
 app.get('/test', (req, res) => {
   //res.send('test 1 ='+ process.env.DATABASE_URL)
-    pg.query('SELECT * FROM chatbot_token', (error, results) => {
-      res.send('test 2')
-    })
-    res.send('test 3')
+    // pg.query('SELECT * FROM chatbot_token', (error, results) => {
+    //   res.send('test 2')
+    // })
+    // res.send('test 3')
+    const pg = require('pg');
+      const R = require('ramda');
+
+      const cs = process.env.DATABASE_URL;
+
+      const client = new pg.Client(cs);
+      client.connect();
+
+      client.query('SELECT 1 + 4').then(res => {
+
+          const result = R.head(R.values(R.head(res.rows)));
+
+          console.log(result);
+      }).finally(() => client.end());
 })
 
 
