@@ -26,7 +26,7 @@ app.get('/test', (req, res) => {
   pg.connect(connectionString, function(err, client, done) {
     client.query('SELECT * FROM chatbot_token', function(err, result) {
        done();
-       if(err) return console.error(err);
+       if(err) return console.error(err.description);
        console.log(result.rows);
     });
  });
