@@ -4,7 +4,11 @@ const bodyParser = require('body-parser')
 const request = require('request')
 
 const { Client } = require('pg')
-const pg = new Client(process.env.DATABASE_URL)
+const connectStr = process.env.DATABASE_URL;
+const pg = new Client({
+  connectionString: connectStr,
+  ssl: true
+});
 
 
 
@@ -37,7 +41,7 @@ app.get('/test', (req, res) => {
 
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     
-    pool.query("select * from chatbot_token", (err, 
+    Client.query("select * from chatbot_token", (err, 
     results) => {
             if (err) {
                 console.log(err);
