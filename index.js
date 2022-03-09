@@ -7,7 +7,7 @@ const { Client } = require('pg')
 const connectStr = process.env.DATABASE_URL;
 const pg = new Client({
   connectionString: connectStr,
-  ssl: true
+  ssl: { rejectUnauthorized: false }
 });
 
 
