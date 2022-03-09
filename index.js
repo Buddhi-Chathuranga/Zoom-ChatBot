@@ -3,8 +3,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 
-const { Client } = require('pg')
-const pg = new Client(process.env.DATABASE_URL)
+// const { Client } = require('pg')
+// const pg = new Client(process.env.DATABASE_URL)
 
 
 
