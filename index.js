@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/test', (req, res) => {
-  exports.dbAction = function(req, res) {
+  
 
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     
@@ -50,7 +50,7 @@ app.get('/test', (req, res) => {
         res.json(results.rows);
         });
       
-    }
+    
 })
 
 
