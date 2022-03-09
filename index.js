@@ -3,8 +3,18 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 
-const { Client } = require('pg')
-const pg = new Client(process.env.DATABASE_URL)
+// const { Client } = require('pg')
+// const pg = new Client(process.env.DATABASE_URL)
+
+
+
+const {Pool} = require('pg');
+const connectStr = process.env.DATABASE_URL;
+const pool = new Pool({
+    connectionString: connectStr,
+    ssl: true
+});
+
 
 pg.connect().catch((error) => {
   console.log('Error connecting to database', error)
@@ -23,13 +33,20 @@ app.get('/', (req, res) => {
 
 
 app.get('/test', (req, res) => {
-  pg.connect(connectionString, function(err, client, done) {
-    client.query('SELECT * FROM chatbot_token', function(err, result) {
-       done();
-       if(err) return console.error(err.description);
-       console.log(result.rows);
-    });
- });
+  exports.dbAction = function(req, res) {
+
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    
+    pool.query("select * from chatbot_token", (err, 
+    results) => {
+            if (err) {
+                console.log(err);
+                throw err;
+            }
+        res.json(results.rows);
+        });
+      
+    }
 })
 
 
