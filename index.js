@@ -8,12 +8,12 @@ const request = require('request')
 
 
 
-const {Pool} = require('pg');
-const connectStr = process.env.DATABASE_URL;
-const pool = new Pool({
-    connectionString: connectStr,
-    ssl: true
-});
+// const {Pool} = require('pg');
+// const connectStr = process.env.DATABASE_URL;
+// const pool = new Pool({
+//     connectionString: connectStr,
+//     ssl: true
+// });
 
 
 pg.connect().catch((error) => {
