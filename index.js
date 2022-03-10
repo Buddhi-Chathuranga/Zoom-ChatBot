@@ -70,60 +70,8 @@ app.get('/zoomverify/verifyzoom.html', (req, res) => {
 
 
 app.post('/unsplash', (req, res) => {
-
-  getChatbotToken()
-
+/////////////////////////////////////////////////////////////////////////////////////////////
   var msg = "";
-
-  function getChatbotToken () {
-    request({
-      url: `https://zoom.us/oauth/token?grant_type=client_credentials`,
-      method: 'POST',
-      headers: {
-        'Authorization': 'Basic ' + Buffer.from(process.env.zoom_client_id + ':' + process.env.zoom_client_secret).toString('base64')
-      }
-    }, (error, httpResponse, body) => {
-      if (error) {
-        console.log('Error getting chatbot_token from Zoom.', error)
-      } else {
-        body = JSON.parse(body)
-        sendChat(body.access_token)
-      }
-    })
-  }
-  
-  function sendChat (chatbotToken) {
-    request({
-      url: 'https://api.zoom.us/v2/im/chat/messages',
-      method: 'POST',
-      json: true,
-      body: {
-        'robot_jid': process.env.zoom_bot_jid,
-        'to_jid': req.body.payload.toJid,
-        'account_id': req.body.payload.accountId,
-        'content': {
-          'head': {
-            'text': 'Unsplash'
-          },
-          'body': [{
-            'type': 'message',
-            'text': 'You sent ' + req.body.payload.cmd + 'Replay =' + output(req.body.payload.cmd)
-          }]
-        }
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + chatbotToken
-      }
-    }, (error, httpResponse, body) => {
-      if (error) {
-        console.log('Error sending chat.', error)
-      } else {
-        console.log(body)
-      }
-    })
-  }
-
   var trigger = [
     ["hi","hey","hello"], 
     ["how are you", "how is life", "how are things"],
@@ -186,6 +134,63 @@ app.post('/unsplash', (req, res) => {
     }
     return item;
   }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+  getChatbotToken()
+
+  
+
+  function getChatbotToken () {
+    request({
+      url: `https://zoom.us/oauth/token?grant_type=client_credentials`,
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + Buffer.from(process.env.zoom_client_id + ':' + process.env.zoom_client_secret).toString('base64')
+      }
+    }, (error, httpResponse, body) => {
+      if (error) {
+        console.log('Error getting chatbot_token from Zoom.', error)
+      } else {
+        body = JSON.parse(body)
+        sendChat(body.access_token)
+      }
+    })
+  }
+  
+  function sendChat (chatbotToken) {
+
+    request({
+      url: 'https://api.zoom.us/v2/im/chat/messages',
+      method: 'POST',
+      json: true,
+      body: {
+        'robot_jid': process.env.zoom_bot_jid,
+        'to_jid': req.body.payload.toJid,
+        'account_id': req.body.payload.accountId,
+        'content': {
+          'head': {
+            'text': 'Unsplash'
+          },
+          'body': [{
+            'type': 'message',
+            'text': 'You sent ' + req.body.payload.cmd + 'Replay =' + output(req.body.payload.cmd)
+          }]
+        }
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + chatbotToken
+      }
+    }, (error, httpResponse, body) => {
+      if (error) {
+        console.log('Error sending chat.', error)
+      } else {
+        console.log(body)
+      }
+    })
+  }
+
+  
 })
 
 
