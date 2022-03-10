@@ -71,7 +71,6 @@ app.get('/zoomverify/verifyzoom.html', (req, res) => {
 
 app.post('/unsplash', (req, res) => {
 /////////////////////////////////////////////////////////////////////////////////////////////
-  var msg = "";
   var trigger = [
     ["hi","hey","hello"], 
     ["how are you", "how is life", "how are things"],
@@ -158,7 +157,7 @@ app.post('/unsplash', (req, res) => {
   }
   
   function sendChat (chatbotToken) {
-
+    var msg = output(req.body.payload.cmd)
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -173,7 +172,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text': 'You sent ' + req.body.payload.cmd + 'Replay =' + output(req.body.payload.cmd)
+            'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
           }]
         }
       },
