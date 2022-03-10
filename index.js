@@ -172,7 +172,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
+            'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + String(msg)
           }]
         }
       },
