@@ -73,6 +73,8 @@ app.post('/unsplash', (req, res) => {
 
   getChatbotToken()
 
+  var msg = "";
+
   function getChatbotToken () {
     request({
       url: `https://zoom.us/oauth/token?grant_type=client_credentials`,
@@ -91,9 +93,7 @@ app.post('/unsplash', (req, res) => {
   }
   
   function sendChat (chatbotToken) {
-    //req.body.payload.cmd
-    var msg = req.body.payload.cmd
-
+    output()
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -108,7 +108,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text': 'You sent ' + req.body.payload.cmd
+            'text': 'You sent ' + req.body.payload.cmd + 'Rplay =' + output(req.body.payload.cmd)
           }]
         }
       },
@@ -158,7 +158,6 @@ app.post('/unsplash', (req, res) => {
   ];
 
   var alternative = ["Haha...", "Eh..."];
-
 
   function output(input){
     try{
