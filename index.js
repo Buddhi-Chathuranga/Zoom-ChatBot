@@ -168,7 +168,7 @@ app.post('/unsplash', (req, res) => {
         'account_id': req.body.payload.accountId,
         'content': {
           'head': {
-            'text': 'Unsplash'
+            'text': 'ZBot'
           },
           'body': [{
             'type': 'message',
