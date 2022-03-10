@@ -30,27 +30,15 @@ const port = process.env.PORT || 4000
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the Unsplash Chatbot for Zoom! by Buddhi')
+  res.send('Welcome to the Chatbot for Zoom! by Buddhi')
 })
 
 
 
 
-app.get('/test', (req, res) => {
+app.get('/test/:msg', (req, res) => {
   
-
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    
-    Client.query("select * from chatbot_token", (err, 
-    results) => {
-            if (err) {
-                console.log(err);
-                throw err;
-            }
-        res.json(results.rows);
-        });
-      
-    
+  
 })
 
 
@@ -59,19 +47,19 @@ app.get('/authorize', (req, res) => {
 })
 
 app.get('/support', (req, res) => {
-  res.send('Contact tommy.gaessler@zoom.us for support.')
+  res.send('Contact Chathuranga4lk12@gmail.com for support.')
 })
 
 app.get('/privacy', (req, res) => {
-  res.send('The Unsplash Chatbot for Zoom does not store any user data.')
+  res.send('The Chatbot for Zoom does not store any user data.')
 })
 
 app.get('/terms', (req, res) => {
-  res.send('By installing the Unsplash Chatbot for Zoom, you are accept and agree to these terms...')
+  res.send('By installing the Chatbot for Zoom, you are accept and agree to these terms...')
 })
 
 app.get('/documentation', (req, res) => {
-  res.send('Try typing "island" to see a photo of an island, or anything else you have in mind!')
+  res.send('Documentation')
 })
 
 app.get('/zoomverify/verifyzoom.html', (req, res) => {
@@ -82,6 +70,7 @@ app.get('/zoomverify/verifyzoom.html', (req, res) => {
 
 
 app.post('/unsplash', (req, res) => {
+
   getChatbotToken()
 
   function getChatbotToken () {
@@ -102,6 +91,9 @@ app.post('/unsplash', (req, res) => {
   }
   
   function sendChat (chatbotToken) {
+
+    var msg = output(req.body.payload.cmd)
+
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -116,7 +108,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text': 'You sent ' + req.body.payload.cmd
+            'text': 'You sent ' + msg
           }]
         }
       },
@@ -131,6 +123,70 @@ app.post('/unsplash', (req, res) => {
         console.log(body)
       }
     })
+  }
+
+  var trigger = [
+    ["hi","hey","hello"], 
+    ["how are you", "how is life", "how are things"],
+    ["what are you doing", "what is going on"],
+    ["how old are you"],
+    ["who are you", "are you human", "are you bot", "are you human or bot"],
+    ["who created you", "who made you"],
+    ["your name please",  "your name", "may i know your name", "what is your name"],
+    ["i love you"],
+    ["happy", "good"],
+    ["bad", "bored", "tired"],
+    ["help me", "tell me story", "tell me joke"],
+    ["ah", "yes", "ok", "okay", "nice", "thanks", "thank you"],
+    ["bye", "good bye", "goodbye", "see you later"]
+  ];
+
+  var reply = [
+    ["Hi","Hey","Hello"], 
+    ["Fine", "Pretty well", "Fantastic"],
+    ["Nothing much", "About to go to sleep", "Can you guest?", "I don't know actually"],
+    ["I am 1 day old"],
+    ["I am just a bot", "I am a bot. What are you?"],
+    ["Buddhi Chathuranga", "My God"],
+    ["I am nameless", "I don't have a name"],
+    ["I love you too", "Me too"],
+    ["Have you ever felt bad?", "Glad to hear it"],
+    ["Why?", "Why? You shouldn't!", "Try watching TV"],
+    ["I will", "What about?"],
+    ["Tell me a story", "Tell me a joke", "Tell me about yourself", "You are welcome"],
+    ["Bye", "Goodbye", "See you later"]
+  ];
+
+  var alternative = ["Haha...", "Eh..."];
+
+
+  function output(input){
+    try{
+      var product = input + "=" + eval(input);
+    } catch(e){
+      var text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, ""); //remove all chars except words, space and 
+      text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
+      if(compare(trigger, reply, text)){
+        var product = compare(trigger, reply, text);
+      } else {
+        var product = alternative[Math.floor(Math.random()*alternative.length)];
+      }
+    }
+
+    res.send(product);
+    
+  }
+  function compare(arr, array, string){
+    var item;
+    for(var x=0; x<arr.length; x++){
+      for(var y=0; y<array.length; y++){
+        if(arr[x][y] == string){
+          items = array[x];
+          item =  items[Math.floor(Math.random()*items.length)];
+        }
+      }
+    }
+    return item;
   }
 })
 
@@ -171,8 +227,8 @@ app.post('/deauthorize', (req, res) => {
     })
   } else {
     res.status(401)
-    res.send('Unauthorized request to Unsplash Chatbot for Zoom.')
+    res.send('Unauthorized request to Chatbot for Zoom.')
   }
 })
 
-app.listen(port, () => console.log(`Unsplash Chatbot for Zoom listening on port ${port}!`))
+app.listen(port, () => console.log(`Chatbot for Zoom listening on port ${port}!`))
