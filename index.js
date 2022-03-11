@@ -240,7 +240,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text':  'This ' + process.xx
+            'text':  'This ' + req.body.xx
           }]
         }
       },
