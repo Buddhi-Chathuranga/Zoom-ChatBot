@@ -188,7 +188,7 @@ app.post('/unsplash', (req, res) => {
     
   }
   function compare(arr, array, string){
-    var item;
+    var item ="ggggg";
     for(var x=0; x<arr.length; x++){
       for(var y=0; y<array.length; y++){
         if(arr[x][y] == string){
@@ -197,7 +197,7 @@ app.post('/unsplash', (req, res) => {
         }
       }
     }
-    return "item";
+    return item;
   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,8 +223,8 @@ app.post('/unsplash', (req, res) => {
   }
   //'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
   function sendChat (chatbotToken) {
-    let msgg = req.body.payload.cmd
-    let xx = output(msgg)
+    var msgg = req.body.payload.cmd
+    var xx = output(msgg)
     
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
