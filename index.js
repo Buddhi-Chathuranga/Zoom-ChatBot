@@ -239,7 +239,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text':  'This ' + x.firstName
+            'text':  'This ' + x.firstName.text
           }]
         }
       },
