@@ -236,7 +236,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text':  msgg
+            'text':  req.body.payload.cmd
           }]
         }
       },
