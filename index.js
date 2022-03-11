@@ -99,8 +99,8 @@ app.get('/test/:msg', (req, res) => {
     }
     return item;
   }
-  //var msg =output(req.msg)
-  res.send("Output " + String(req.params.msg))
+  var mm =output(req.params.msg)
+  res.send("Output " + mm)
   
 })
 
@@ -235,7 +235,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg.params
+            'text':  msg
           }]
         }
       },
