@@ -222,7 +222,7 @@ app.post('/unsplash', (req, res) => {
   }
   //'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
   function sendChat (chatbotToken) {
-    var msgg = req.body.payload.cmd
+    let msgg = req.body.payload.cmd
     let x = {firstName:"Johkkn"}; 
     x.firstName = output(msgg)
     request({
