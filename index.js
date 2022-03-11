@@ -241,7 +241,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text':  'This ' + String(obj)
+            'text':  'This ' + obj.params
           }]
         }
       },
