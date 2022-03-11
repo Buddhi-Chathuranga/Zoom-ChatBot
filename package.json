@@ -16,5 +16,13 @@
     "request": "^2.88.2",
     "sails-postgresql": "^4.0.0"
   },
-  "description": ""
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Buddhi-Chathuranga/Zoom-ChatBot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Buddhi-Chathuranga/Zoom-ChatBot/issues"
+  },
+  "homepage": "https://github.com/Buddhi-Chathuranga/Zoom-ChatBot#readme"
 }
