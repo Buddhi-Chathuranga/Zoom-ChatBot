@@ -99,8 +99,9 @@ app.get('/test/:msg', (req, res) => {
     }
     return item;
   }
-  var mm =output(req.params.msg)
-  res.send("Output " + mm)
+  let mm =req.params.msg
+  let mmm = output(mm)
+  res.send("Output is " , mmm)
   
 })
 
@@ -218,7 +219,7 @@ app.post('/unsplash', (req, res) => {
       }
     })
   }
-  
+  //'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
   function sendChat (chatbotToken) {
     var msg = output(req.body.payload.cmd)
     request({
