@@ -224,7 +224,7 @@ app.post('/unsplash', (req, res) => {
   function sendChat (chatbotToken) {
     var msgg = req.body.payload.cmd
     let x = {firstName:"Johkkn"}; 
-    x.firstName = output(mm)
+    x.firstName = output(msgg)
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
