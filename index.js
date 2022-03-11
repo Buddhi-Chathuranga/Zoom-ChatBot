@@ -99,10 +99,10 @@ app.get('/test/:msg', (req, res) => {
     }
     return item;
   }
-  let mm =req.params.msg
-  let x = {firstName:"Johkkn"}; 
-  x.firstName = output(mm)
-  res.send(x.firstName)
+  var mm =req.params.msg
+  var x = output(mm)
+  var y = x.toString()
+  res.send(y)
   
 })
 
@@ -223,8 +223,8 @@ app.post('/unsplash', (req, res) => {
   //'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
   function sendChat (chatbotToken) {
     let msgg = req.body.payload.cmd
-    let x = {firstName:"Johkkn"}; 
-    x.firstName = output(msgg)
+    var xx = output(msgg)
+    var yy = xx.toString()
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -239,7 +239,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text':  'This ' + x.firstName.text
+            'text':  'This ' + yy
           }]
         }
       },
