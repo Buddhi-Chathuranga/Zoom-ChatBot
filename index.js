@@ -94,6 +94,7 @@ app.get('/test/:msg', (req, res) => {
         if(arr[x][y] == string){
           items = array[x];
           item =  items[Math.floor(Math.random()*items.length)];
+          item = item.toString()
         }
       }
     }
@@ -196,7 +197,7 @@ app.post('/unsplash', (req, res) => {
         }
       }
     }
-    return item;
+    return "item";
   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
