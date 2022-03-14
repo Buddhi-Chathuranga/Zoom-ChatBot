@@ -224,7 +224,7 @@ app.post('/unsplash', (req, res) => {
   //'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
   function sendChat (chatbotToken) {
     var msgg = req.body.payload.cmd
-    var replay = output(msgg)
+    var replay = output(`${msgg}`)
     
     
     request({
@@ -241,7 +241,7 @@ app.post('/unsplash', (req, res) => {
           },
           'body': [{
             'type': 'message',
-            'text':  'Bot Replay => '+ msgg
+            'text':  'Bot Replay => '+ replay
           }]
         }
       },
