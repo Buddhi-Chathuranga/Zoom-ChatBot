@@ -77,23 +77,28 @@ app.get('/test/:msg', (req, res) => {
     
     let text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, ""); //remove all chars except words, space and
     text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
-
     let item;
-
+  try{
     for(let x=0; x<trigger.length; x++){
         for(let y=0; y<reply.length; y++){
             if(trigger[x][y] == text){
+              console.log("ok");
               items = reply[x];
               item =  items[Math.floor(Math.random()*items.length)];
               console.log("Item = "+item.toString());
               product = item.toString();
+              return product
             }
             else {
               product = alternative[Math.floor(Math.random()*alternative.length)];
+              return product
             }
         }
     }
-    return product;
+  }catch{
+    product = alternative[Math.floor(Math.random()*alternative.length)];
+  }
+    
   }
 
 
@@ -194,21 +199,28 @@ app.post('/unsplash', (req, res) => {
 
     let item;
 
-    for(let x=0; x<trigger.length; x++){
-        for(let y=0; y<reply.length; y++){
-            if(trigger[x][y] == text){
-              items = reply[x];
-              item =  items[Math.floor(Math.random()*items.length)];
-              console.log("Item = "+item.toString());
-              product = item.toString();
-            }
-            else {
-              product = alternative[Math.floor(Math.random()*alternative.length)];
-            }
-        }
+    try{
+      for(let x=0; x<trigger.length; x++){
+          for(let y=0; y<reply.length; y++){
+              if(trigger[x][y] == text){
+                console.log("ok");
+                items = reply[x];
+                item =  items[Math.floor(Math.random()*items.length)];
+                console.log("Item = "+item.toString());
+                product = item.toString();
+                return product
+              }
+              else {
+                product = alternative[Math.floor(Math.random()*alternative.length)];
+                return product
+              }
+          }
+      }
+    }catch{
+      product = alternative[Math.floor(Math.random()*alternative.length)];
     }
-    return product;
-  }
+      
+    }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
   getChatbotToken()
