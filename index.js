@@ -71,36 +71,53 @@ app.get('/test/:msg', (req, res) => {
   ];
 
   const alternative = ["Haha...", "Eh..."];
-
+  let product;
   function output(input){
-    let product;
-    try{
-      product = input + "=" + eval(input);
-    } catch(e){
-      let text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, ""); //remove all chars except words, space and
-      text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
-      if(compare(trigger, reply, text)){
-        product = compare(trigger, reply, text);
-      } else {
-        product = alternative[Math.floor(Math.random()*alternative.length)];
-      }
-    }
-
-    res.send(product);
     
-  }
-  function compare(arr, array, string){
-    let item ='';
-    for(let x=0; x<arr.length; x++){
-      for(let y=0; y<array.length; y++){
-        if(arr[x][y] == string){
-          items = array[x];
-          item =  items[Math.floor(Math.random()*items.length)];
+    
+    let text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, ""); //remove all chars except words, space and
+    text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
+
+    let item;
+
+    for(let x=0; x<trigger.length; x++){
+        for(let y=0; y<reply.length; y++){
+            if(trigger[x][y] == text){
+              items = reply[x];
+              item =  items[Math.floor(Math.random()*items.length)];
+              console.log("Item = "+item.toString());
+              product = item.toString();
+            }
+            else {
+              product = alternative[Math.floor(Math.random()*alternative.length)];
+            }
         }
-      }
     }
-    return item;
+    return product;
   }
+
+
+
+    //   if(compare(trigger, reply, text)){
+    //     product = compare(trigger, reply, text);
+    //   } else {
+    //     product = alternative[Math.floor(Math.random()*alternative.length)];
+    //   }
+    // }
+    
+  
+  // function compare(arr, array, string){
+  //   let item;
+  //   for(let x=0; x<arr.length; x++){
+  //     for(let y=0; y<array.length; y++){
+  //       if(arr[x][y] == string){
+  //         items = array[x];
+  //         item =  items[Math.floor(Math.random()*items.length)];
+  //       }
+  //     }
+  //   }
+  //   return item;
+  // }
   msg= req.params.msg
   res.send(output(msg))
 })
@@ -168,35 +185,29 @@ app.post('/unsplash', (req, res) => {
   ];
 
   const alternative = ["Haha...", "Eh..."];
-
+  let product;
   function output(input){
-    let product;
-    try{
-      product = input + "=" + eval(input);
-    } catch(e){
-      let text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, ""); //remove all chars except words, space and
-      text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
-      if(compare(trigger, reply, text)){
-        product = compare(trigger, reply, text);
-      } else {
-        product = alternative[Math.floor(Math.random()*alternative.length)];
-      }
-    }
-
-    res.send(product);
     
-  }
-  function compare(arr, array, string){
-    let item= '';
-    for(let x=0; x<arr.length; x++){
-      for(let y=0; y<array.length; y++){
-        if(arr[x][y] == string){
-          items = array[x];
-          item =  items[Math.floor(Math.random()*items.length)];
+    
+    let text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, ""); //remove all chars except words, space and
+    text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
+
+    let item;
+
+    for(let x=0; x<trigger.length; x++){
+        for(let y=0; y<reply.length; y++){
+            if(trigger[x][y] == text){
+              items = reply[x];
+              item =  items[Math.floor(Math.random()*items.length)];
+              console.log("Item = "+item.toString());
+              product = item.toString();
+            }
+            else {
+              product = alternative[Math.floor(Math.random()*alternative.length)];
+            }
         }
-      }
     }
-    return item;
+    return product;
   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,7 +234,7 @@ app.post('/unsplash', (req, res) => {
   //'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
   function sendChat (chatbotToken) {
     const msg = req.body.payload.cmd;
-    const replay = output(msg).slice();
+    const replay = output(msg).toString();
 
 
     request({
