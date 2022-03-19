@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const request = require('request')
 
 const { Client } = require('pg')
+const { max } = require('pg/lib/defaults')
 const connectStr = process.env.DATABASE_URL;
 const pg = new Client({
   connectionString: connectStr,
@@ -37,7 +38,71 @@ app.get('/', (req, res) => {
 
 
 app.get('/test/:msg', (req, res) => {
+  const trigger = [
+    ["hi", "hey", "hello"],
+    ["how are you", "how is life", "how are things"],
+    ["what are you doing", "what is going on"],
+    ["how old are you"],
+    ["who are you", "are you human", "are you bot", "are you human or bot"],
+    ["who created you", "who made you"],
+    ["your name please", "your name", "may i know your name", "what is your name"],
+    ["i love you"],
+    ["happy", "good"],
+    ["bad", "bored", "tired"],
+    ["help me", "tell me story", "tell me joke"],
+    ["ah", "yes", "ok", "okay", "nice", "thanks", "thank you"],
+    ["bye", "good bye", "goodbye", "see you later"]
+  ];
 
+  const reply = [
+    ["Hi", "Hey", "Hello"],
+    ["Fine", "Pretty well", "Fantastic"],
+    ["Nothing much", "About to go to sleep", "Can you guest?", "I don't know actually"],
+    ["I am 1 day old"],
+    ["I am just a bot", "I am a bot. What are you?"],
+    ["Buddhi Chathuranga", "My God"],
+    ["I am nameless", "I don't have a name"],
+    ["I love you too", "Me too"],
+    ["Have you ever felt bad?", "Glad to hear it"],
+    ["Why?", "Why? You shouldn't!", "Try watching TV"],
+    ["I will", "What about?"],
+    ["Tell me a story", "Tell me a joke", "Tell me about yourself", "You are welcome"],
+    ["Bye", "Goodbye", "See you later"]
+  ];
+
+  const alternative = ["Haha...", "Eh..."];
+
+  function output(input){
+    let product;
+    try{
+      product = input + "=" + eval(input);
+    } catch(e){
+      let text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, ""); //remove all chars except words, space and
+      text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
+      if(compare(trigger, reply, text)){
+        product = compare(trigger, reply, text);
+      } else {
+        product = alternative[Math.floor(Math.random()*alternative.length)];
+      }
+    }
+
+    res.send(product);
+    
+  }
+  function compare(arr, array, string){
+    let item ='';
+    for(let x=0; x<arr.length; x++){
+      for(let y=0; y<array.length; y++){
+        if(arr[x][y] == string){
+          items = array[x];
+          item =  items[Math.floor(Math.random()*items.length)];
+        }
+      }
+    }
+    return item;
+  }
+  msg= req.params.msg
+  res.send(output(msg))
 })
 
 
@@ -122,7 +187,7 @@ app.post('/unsplash', (req, res) => {
     
   }
   function compare(arr, array, string){
-    let item;
+    let item= '';
     for(let x=0; x<arr.length; x++){
       for(let y=0; y<array.length; y++){
         if(arr[x][y] == string){
@@ -158,7 +223,7 @@ app.post('/unsplash', (req, res) => {
   //'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
   function sendChat (chatbotToken) {
     const msg = req.body.payload.cmd;
-    const replay = 'output(msg).toString()';
+    const replay = output(msg);
 
 
     request({
