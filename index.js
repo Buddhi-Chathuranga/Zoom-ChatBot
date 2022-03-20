@@ -338,7 +338,7 @@ msg= req.params.msg
         'account_id': req.body.payload.accountId,
         'content': {
           'head': {
-            'text': 'ZBot'
+            'text': 'Zoom_Bot'
           },
           'body': [{
             'type': 'message',
