@@ -342,7 +342,7 @@ msg= req.params.msg
           },
           'body': [{
             'type': 'message',
-            'text':  'Bot Replay => '+ replay
+            'text':  replay
           }]
         }
       },
