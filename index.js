@@ -168,10 +168,10 @@ function compare(triggerArray, replyArray, string) {
   }
   return item;
 }
+/////////////////////////////////////
 
 msg= req.params.msg
 
-///////////////////////////////////////////
   getChatbotToken()
 
   function getChatbotToken () {
@@ -190,7 +190,7 @@ msg= req.params.msg
       }
     })
   }
-  //'text': 'You sent ' + req.body.payload.cmd + '     Replay =' + msg
+
   function sendChat (chatbotToken) {
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
