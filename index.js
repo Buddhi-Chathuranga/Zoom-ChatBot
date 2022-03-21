@@ -206,6 +206,7 @@ msg= req.params.msg
         'account_id': req.body.payload.accountId,
         'content': {
           'head': {
+            "color": "#0099ff",
             'text': 'Zoom_Bot'
           },
           'body': [{
