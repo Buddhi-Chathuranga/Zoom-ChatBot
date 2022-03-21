@@ -208,9 +208,9 @@ msg= req.params.msg
           'head': {
             'text': 'Zoom_Bot',
             "style": {
-              "color": "#8338EC",
+              "color": "#0099ff",
               "bold": true,
-              "italic": false
+              "italic": true
             },
           },
           'body': [{
