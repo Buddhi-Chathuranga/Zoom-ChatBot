@@ -214,8 +214,14 @@ msg= req.params.msg
             },
           },
           'body': [{
-            'type': 'message',
-            'text':  replay
+            "type": "section",
+            "sidebar_color": "#0099ff",
+            "sections": [
+                {
+                  "type": "message",
+                  "text": replay
+                }
+            ]
           }]
         }
       },
