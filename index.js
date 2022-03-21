@@ -25,7 +25,18 @@ app.get('/', (req, res) => {
 })
 
 app.get('/test/:msg', (req, res) => {
-  res.send('Testing')
+  // var natural = require('natural');
+  // var msg = req.params.msg
+  // var tokenizer = new natural.WordTokenizer();
+  var natural = require('natural');
+
+var corpus = ['something', 'soothing'];
+var spellcheck = new natural.Spellcheck(corpus);
+
+//res.send(spellcheck.getCorrections('soemthing', 1)); 
+res.send(spellcheck.getCorrections('soemthing', 2));
+
+  //res.send(tokenizer.tokenize(msg));
 })
 
 
