@@ -200,7 +200,7 @@ function getSentiment (msg){
 
   var k=analyzer.getSentiment(trimmedText);
   var url;
-  if(k<0){
+  if(k>0){
     url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
     return url;
   }
