@@ -240,8 +240,8 @@ msg= req.params.msg
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
 
-    const url = getSentiment(msg);
-    // url = "https://d24cgw3uvb9a9h.cloudfront.net/static/93516/image/new/ZoomLogo.png"
+    //const url = getSentiment(msg);
+    url = "https://d24cgw3uvb9a9h.cloudfront.net/static/93516/image/new/ZoomLogo.png"
 
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
