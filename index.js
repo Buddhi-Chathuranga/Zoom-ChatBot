@@ -241,11 +241,11 @@ msg= req.params.msg
                   "type": "message",
                   "text": replay
                 }
-            ]
-          }],
-          "footer": "I am a footer",
-          "footer_icon": "https://d24cgw3uvb9a9h.cloudfront.net/static/93516/image/new/ZoomLogo.png",
-          "ts": 1560446471819
+            ], 
+            "footer": "I am a footer",
+            "footer_icon": "https://d24cgw3uvb9a9h.cloudfront.net/static/93516/image/new/ZoomLogo.png",
+            "ts": 1560446471819
+          }]
         }
       },
       headers: {
