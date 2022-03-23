@@ -241,7 +241,7 @@ msg= req.params.msg
     const replay = proccessMessage(msg);
 
     //const url = getSentiment(msg);
-    url = "https://drive.google.com/file/d/1H4Y4OD2bAFLfxeMfdVYGHRlJRWMuzUe4/view?usp=sharing"
+    url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
 
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
