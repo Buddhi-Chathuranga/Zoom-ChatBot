@@ -201,15 +201,15 @@ function getSentiment (msg){
   var k=analyzer.getSentiment(trimmedText);
   var url;
   if(k<0){
-    url = "https://drive.google.com/file/d/1H4Y4OD2bAFLfxeMfdVYGHRlJRWMuzUe4/view?usp=sharing";
+    url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
     return url;
   }
   else if(k==0){
-    url = "https://drive.google.com/file/d/1EKkqeN2uP9b3gN9qzdsTb_1Fx1DayqAL/view?usp=sharing";
+    url = "http://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037";
     return url;
   }
   else if(k<0){
-    url = "https://drive.google.com/file/d/1njuX-lmz1lEDTR82mxOPnGbQ2gFNtJwB/view?usp=sharing";
+    url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
     return url;
   }
 }
@@ -240,8 +240,8 @@ msg= req.params.msg
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
 
-    //const url = getSentiment(msg);
-    url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
+    const url = getSentiment(msg);
+    //url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
 
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
