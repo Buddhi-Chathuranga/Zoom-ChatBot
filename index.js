@@ -241,7 +241,7 @@ msg= req.params.msg
     const replay = proccessMessage(msg);
 
     //const url = getSentiment(msg);
-    url = "https://d24cgw3uvb9a9h.cloudfront.net/static/93516/image/new/ZoomLogo.png"
+    url = "https://drive.google.com/file/d/1H4Y4OD2bAFLfxeMfdVYGHRlJRWMuzUe4/view?usp=sharing"
 
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
