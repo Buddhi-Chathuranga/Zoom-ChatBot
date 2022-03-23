@@ -245,7 +245,7 @@ msg= req.params.msg
             ], 
             "footer": "",
             "footer_icon": url,
-            "ts": 1560446471819
+            "ts": 
           }]
         }
       },
