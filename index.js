@@ -241,7 +241,7 @@ msg= req.params.msg
     const replay = proccessMessage(msg);
 
     //const url = getSentiment(msg);
-    url = "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037"
+    url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
 
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
