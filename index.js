@@ -240,8 +240,8 @@ msg= req.params.msg
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
 
-    const url = getSentiment(msg);
-    //url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
+    //const url = getSentiment(msg);
+    url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
 
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
