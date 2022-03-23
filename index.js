@@ -213,6 +213,21 @@ function getSentiment (msg){
     return url;
   }
 }
+
+function getSen (msg){
+  var natural = require('natural');
+  var Analyzer = natural.SentimentAnalyzer;
+  var stemmer = natural.PorterStemmer;
+  var analyzer = new Analyzer("English", stemmer, "afinn");
+
+
+  var natural = require('natural');
+  var tokenizer = new natural.WordTokenizer();
+  var trimmedText = tokenizer.tokenize(msg);
+
+  var k=analyzer.getSentiment(trimmedText);
+  return k;
+}
 ////////////////////////////////////
 
 msg= req.params.msg
@@ -241,6 +256,7 @@ msg= req.params.msg
     const replay = proccessMessage(msg);
 
     const url = getSentiment(msg);
+    const n = getSen(msg);
     //url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
 
     request({
@@ -266,7 +282,7 @@ msg= req.params.msg
             "sections": [
                 {
                   "type": "message",
-                  "text": replay
+                  "text": replay +" var = "+n
                 }
             ], 
             "footer": "",
