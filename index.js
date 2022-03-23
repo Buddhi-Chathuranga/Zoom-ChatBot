@@ -24,19 +24,35 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Chatbot for Zoom! by Buddhi')
 })
 
-app.get('/test/:msg', (req, res) => {
+app.get('/test', (req, res) => {
+  var msg = req.params.msg;
+
   // var natural = require('natural');
-  // var msg = req.params.msg
   // var tokenizer = new natural.WordTokenizer();
+
+  // var devidedText = tokenizer.tokenize(msg);
+
+  // var checkedDeviedText = [];
+  // var corpus = msg;
+  // var spellcheck = new natural.Spellcheck(corpus);
+  // spellcheck = checkedDeviedText.push(spellcheck,1);
+
+  // // for(var i=0 ; i<devidedText.length ; i++){
+  // //   var corpus = devidedText[i];
+  // //   var spellcheck = new natural.Spellcheck(corpus);
+  // //   spellcheck.toString() = checkedDeviedText.push(spellcheck);
+  // }
   var natural = require('natural');
+var Analyzer = natural.SentimentAnalyzer;
+var stemmer = natural.PorterStemmer;
 
-var corpus = ['something', 'soothing'];
-var spellcheck = new natural.Spellcheck(corpus);
+var analyzer1 = new Analyzer("English", stemmer, "afinn");
 
-//res.send(spellcheck.getCorrections('soemthing', 1)); 
-res.send(spellcheck.getCorrections('soemthing', 2));
+var analyzer2 = new Analyzer("English", stemmer, "senticon");
 
-  //res.send(tokenizer.tokenize(msg));
+var analyzer3 = new Analyzer("English", stemmer, "pattern");
+
+res.send(analyzer1.getSentiment(["I", "don't", "want", "to", "play", "with", "you"]).toString()+"= one "+analyzer2.getSentiment(["I", "don't", "want", "to", "play", "with", "you"]).toString()+"= two "+analyzer3.getSentiment(["I", "don't", "want", "to", "play", "with", "you"]).toString()+" ");
 })
 
 
@@ -68,7 +84,7 @@ app.get('/zoomverify/verifyzoom.html', (req, res) => {
 
 
 app.post('/unsplash', (req, res) => {
-/////////////////////////////////////
+//////////////////-----01------///////////////////
 const trigger = [
   ["hi", "hey", "hello", "good morning", "good afternoon"],
   ["how are you", "how is life", "how are things"],
@@ -170,6 +186,10 @@ function compare(triggerArray, replyArray, string) {
 }
 /////////////////////////////////////
 
+///////////////----02----////////////
+
+////////////////////////////////////
+
 msg= req.params.msg
 
   getChatbotToken()
@@ -222,7 +242,10 @@ msg= req.params.msg
                   "text": replay
                 }
             ]
-          }]
+          }],
+          "footer": "I am a footer",
+          "footer_icon": "https://d24cgw3uvb9a9h.cloudfront.net/static/93516/image/new/ZoomLogo.png",
+          "ts": 1560446471819
         }
       },
       headers: {
