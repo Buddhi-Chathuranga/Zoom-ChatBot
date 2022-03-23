@@ -15,7 +15,8 @@
     "natural": "^5.1.13",
     "pg": "^8.7.3",
     "request": "^2.88.2",
-    "sails-postgresql": "^4.0.0"
+    "sails-postgresql": "^4.0.0",
+    "stopword": "^2.0.1"
   },
   "description": "",
   "repository": {

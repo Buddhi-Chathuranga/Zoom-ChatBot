@@ -187,7 +187,32 @@ function compare(triggerArray, replyArray, string) {
 /////////////////////////////////////
 
 ///////////////----02----////////////
+function getSentiment (msg){
+  var natural = require('natural');
+  var Analyzer = natural.SentimentAnalyzer;
+  var stemmer = natural.PorterStemmer;
+  var analyzer = new Analyzer("English", stemmer, "afinn");
 
+
+  var natural = require('natural');
+  var tokenizer = new natural.WordTokenizer();
+  var trimmedText = tokenizer.tokenize(msg);
+
+  var k=analyzer.getSentiment(trimmedText);
+  var url;
+  if(k<0){
+    url = "https://drive.google.com/file/d/1H4Y4OD2bAFLfxeMfdVYGHRlJRWMuzUe4/view?usp=sharing";
+    return url;
+  }
+  else if(k==0){
+    url = "https://drive.google.com/file/d/1EKkqeN2uP9b3gN9qzdsTb_1Fx1DayqAL/view?usp=sharing";
+    return url;
+  }
+  else if(k<0){
+    url = "https://drive.google.com/file/d/1njuX-lmz1lEDTR82mxOPnGbQ2gFNtJwB/view?usp=sharing";
+    return url;
+  }
+}
 ////////////////////////////////////
 
 msg= req.params.msg
@@ -215,7 +240,8 @@ msg= req.params.msg
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
 
-    url = "https://d24cgw3uvb9a9h.cloudfront.net/static/93516/image/new/ZoomLogo.png"
+    const url = getSentiment(msg);
+    // url = "https://d24cgw3uvb9a9h.cloudfront.net/static/93516/image/new/ZoomLogo.png"
 
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
@@ -244,8 +270,7 @@ msg= req.params.msg
                 }
             ], 
             "footer": "",
-            "footer_icon": url,
-            "ts": 1560
+            "footer_icon": url
           }]
         }
       },
