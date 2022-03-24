@@ -282,7 +282,7 @@ msg= req.params.msg
             "sections": [
                 {
                   "type": "message",
-                  "text": replay +" var = "+n
+                  "text": replay +" var = "+n +" ww /n ww"
                 }
             ], 
             "footer": "",
