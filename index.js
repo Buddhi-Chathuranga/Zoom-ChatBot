@@ -286,8 +286,7 @@ msg= req.params.msg
                   +""
                 }
             ], 
-            "type": "message for Footer",
-            "footer": "",
+            "footer": "Footer Msg",
             "footer_icon": url
           }]
         }
