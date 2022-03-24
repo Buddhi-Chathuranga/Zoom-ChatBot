@@ -282,9 +282,11 @@ msg= req.params.msg
             "sections": [
                 {
                   "type": "message",
-                  "text": replay +" var = "+n +" ww \n ww"
+                  "text": replay +" var = "+n +"\n"
+                  +""
                 }
             ], 
+            "type": "message for Footer",
             "footer": "",
             "footer_icon": url
           }]
