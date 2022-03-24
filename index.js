@@ -214,18 +214,20 @@ function getSentiment (msg){
   }
 }
 
-function getSen (msg){
-  var natural = require('natural');
-  var Analyzer = natural.SentimentAnalyzer;
-  var stemmer = natural.PorterStemmer;
-  var analyzer = new Analyzer("English", stemmer, "afinn");
+function getSen (url){
+  var k;
+  if(url=="https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"){
+    k = "Very Happy";
+  }
+  else if(url=="https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037"){
+    k = "Happy";
+  }
+  else if(url=="https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"){
+    k = "Sad";
+  }
+  else{
 
-
-  var natural = require('natural');
-  var tokenizer = new natural.WordTokenizer();
-  var trimmedText = tokenizer.tokenize(msg);
-
-  var k=analyzer.getSentiment(trimmedText);
+  }
   return k;
 }
 ////////////////////////////////////
@@ -256,7 +258,7 @@ msg= req.params.msg
     const replay = proccessMessage(msg);
 
     const url = getSentiment(msg);
-    const n = getSen(msg);
+    const n = getSen(url);
     //url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
 
     request({
@@ -282,11 +284,10 @@ msg= req.params.msg
             "sections": [
                 {
                   "type": "message",
-                  "text": replay +" var = "+n +"\n"
-                  +""
+                  "text": replay
                 }
             ], 
-            "footer": "Footer Msg",
+            "footer": n,
             "footer_icon": url
           }]
         }
