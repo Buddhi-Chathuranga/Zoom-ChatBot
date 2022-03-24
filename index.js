@@ -260,7 +260,7 @@ msg= req.params.msg
     const url = getSentiment(msg);
     const n = getSen(url);
 
-    const msgs = [];
+    var msgs = [];
     
     //url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
     if(msg=="Bye"){
