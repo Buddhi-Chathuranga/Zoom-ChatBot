@@ -287,7 +287,7 @@ msg= req.params.msg
                   "sections": [
                       {
                         "type": "message",
-                        "text": msgs.toString()
+                        "text": msgs.length.toString()
                       }
                   ], 
                   "footer": ""
