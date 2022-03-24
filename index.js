@@ -260,7 +260,7 @@ msg= req.params.msg
     const url = getSentiment(msg);
     const n = getSen(url);
     //url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
-
+    if(msg=="Bye"){
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -278,18 +278,18 @@ msg= req.params.msg
               "italic": true
             },
           },
-          'body': [{
-            "type": "section",
-            "sidebar_color": "#0099ff",
-            "sections": [
-                {
-                  "type": "message",
-                  "text": replay
-                }
-            ], 
-            "footer": n,
-            "footer_icon": url
-          }]
+                'body': [{
+                  "type": "section",
+                  "sidebar_color": "#0099ff",
+                  "sections": [
+                      {
+                        "type": "message",
+                        "text": replay
+                      }
+                  ], 
+                  "footer": n,
+                  "footer_icon": url
+                }]
         }
       },
       headers: {
@@ -303,6 +303,51 @@ msg= req.params.msg
         console.log(body)
       }
     })
+  }
+  else{
+    request({
+      url: 'https://api.zoom.us/v2/im/chat/messages',
+      method: 'POST',
+      json: true,
+      body: {
+        'robot_jid': process.env.zoom_bot_jid,
+        'to_jid': req.body.payload.toJid,
+        'account_id': req.body.payload.accountId,
+        'content': {
+          'head': {
+            'text': 'Zoom_Bot',
+            "style": {
+              "color": "#0099ff",
+              "bold": true,
+              "italic": true
+            },
+          },
+                'body': [{
+                  "type": "section",
+                  "sidebar_color": "#0099ff",
+                  "sections": [
+                      {
+                        "type": "message",
+                        "text": "Not Hi "+replay
+                      }
+                  ], 
+                  "footer": n,
+                  "footer_icon": url
+                }]
+        }
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + chatbotToken
+      }
+    }, (error, httpResponse, body) => {
+      if (error) {
+        console.log('Error sending chat.', error)
+      } else {
+        console.log(body)
+      }
+    })
+  }
   }
 
   
