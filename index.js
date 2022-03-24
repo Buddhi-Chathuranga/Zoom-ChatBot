@@ -259,6 +259,9 @@ msg= req.params.msg
 
     const url = getSentiment(msg);
     const n = getSen(url);
+
+    const msgs = [];
+    
     //url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
     if(msg=="Bye"){
     request({
@@ -284,11 +287,10 @@ msg= req.params.msg
                   "sections": [
                       {
                         "type": "message",
-                        "text": replay
+                        "text": msgs.toString()
                       }
                   ], 
-                  "footer": n,
-                  "footer_icon": url
+                  "footer": ""
                 }]
         }
       },
@@ -305,6 +307,7 @@ msg= req.params.msg
     })
   }
   else{
+    msgs.push(msg);
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -328,7 +331,7 @@ msg= req.params.msg
                   "sections": [
                       {
                         "type": "message",
-                        "text": "Not Hi "+replay
+                        "text": replay
                       }
                   ], 
                   "footer": n,
