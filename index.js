@@ -339,7 +339,7 @@ msg= req.params.msg
                   "sections": [
                       {
                         "type": "message",
-                        "text": msgs.length.toString()
+                        "text": log
                       }
                   ], 
                   "footer": ""
