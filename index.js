@@ -24,36 +24,68 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Chatbot for Zoom! by Buddhi')
 })
 
-app.get('/test', (req, res) => {
-  var msg = req.params.msg;
+app.get('/write', (req, res) => {
+  const trigger = 
+    ["hi", "hey"];
+  const fs = require('fs');
+  const customer = {
+    firstName: trigger,
+  };
 
-  // var natural = require('natural');
-  // var tokenizer = new natural.WordTokenizer();
+  const jsonString = JSON.stringify(customer);
 
-  // var devidedText = tokenizer.tokenize(msg);
-
-  // var checkedDeviedText = [];
-  // var corpus = msg;
-  // var spellcheck = new natural.Spellcheck(corpus);
-  // spellcheck = checkedDeviedText.push(spellcheck,1);
-
-  // // for(var i=0 ; i<devidedText.length ; i++){
-  // //   var corpus = devidedText[i];
-  // //   var spellcheck = new natural.Spellcheck(corpus);
-  // //   spellcheck.toString() = checkedDeviedText.push(spellcheck);
-  // }
-  var natural = require('natural');
-var Analyzer = natural.SentimentAnalyzer;
-var stemmer = natural.PorterStemmer;
-
-var analyzer1 = new Analyzer("English", stemmer, "afinn");
-
-var analyzer2 = new Analyzer("English", stemmer, "senticon");
-
-var analyzer3 = new Analyzer("English", stemmer, "pattern");
-
-res.send(analyzer1.getSentiment(["I", "don't", "want", "to", "play", "with", "you"]).toString()+"= one "+analyzer2.getSentiment(["I", "don't", "want", "to", "play", "with", "you"]).toString()+"= two "+analyzer3.getSentiment(["I", "don't", "want", "to", "play", "with", "you"]).toString()+" ");
+  fs.writeFile('./Chat.json', jsonString, err => {
+    if (err) {
+      res.send('Error writing file', err);
+    } else {
+      res.send('Successfully wrote file');
+    }
+  });
 })
+
+app.get('/get', (req, res) =>{
+  const fs = require('fs');
+
+  let rawdata = fs.readFileSync('Chat.json');
+  let log = JSON.parse(rawdata);
+  let arr = log.chat;
+  arr.push('aaa');
+//
+  const data = {
+    chat: arr,
+  };
+
+  const jsonString = JSON.stringify(data);
+
+  fs.writeFile('./Chat.json', jsonString, err => {
+    if (err) {
+      res.send('Error writing file', err);
+    } else {
+      res.send(data);
+    }
+  });
+})
+
+  app.get('/clear', (req, res) => {
+    const fs = require('fs');
+
+    let rawdata = fs.readFileSync('Chat.json');
+    let log = JSON.parse(rawdata);
+    let arr1 = [];
+    const data = {
+      chat: arr1,
+    };
+  
+    const jsonString = JSON.stringify(data);
+  
+    fs.writeFile('./Chat.json', jsonString, err => {
+      if (err) {
+        res.send('Error writing file', err);
+      } else {
+        res.send(data);
+      }
+    });
+  })
 
 
 app.get('/authorize', (req, res) => {
@@ -264,6 +296,26 @@ msg= req.params.msg
     
     //url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
     if(msg=="Bye"){
+
+      const fs = require('fs');
+
+    let rawdata = fs.readFileSync('Chat.json');
+    let log = JSON.parse(rawdata);
+    let arr1 = [];
+    const data = {
+      chat: arr1,
+    };
+  
+    const jsonString = JSON.stringify(data);
+  
+    fs.writeFile('./Chat.json', jsonString, err => {
+      if (err) {
+        res.send('Error writing file', err);
+      } else {
+        res.send(data);
+      }
+    });
+
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -307,7 +359,26 @@ msg= req.params.msg
     })
   }
   else{
-    msgs.push(msg);
+    const fs = require('fs');
+
+  let rawdata = fs.readFileSync('Chat.json');
+  let log = JSON.parse(rawdata);
+  let arr = log.chat;
+  arr.push(msg);
+//
+  const data = {
+    chat: arr,
+  };
+
+  const jsonString = JSON.stringify(data);
+
+  fs.writeFile('./Chat.json', jsonString, err => {
+    if (err) {
+      res.send('Error writing file', err);
+    } else {
+      res.send(data);
+    }
+  });
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
