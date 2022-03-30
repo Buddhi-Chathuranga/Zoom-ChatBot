@@ -334,11 +334,11 @@ msg= req.params.msg
   else{
     
     // /////
-    let mess = new Message({
-      message: msg.toString()
-    })
+    // let mess = new Message({
+    //   message: msg.toString()
+    // })
     
-    await mess.save()
+    // await mess.save()
   
     // /////
     request({
