@@ -312,7 +312,7 @@ msg= req.params.msg
     
     /////
     try{
-      const myMessage = new Message(req.body);
+      const myMessage = new Message(msg);
       await myMessage.save();
       console.log("Create Message ");
     }catch(err){
