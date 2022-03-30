@@ -41,19 +41,42 @@ const port = process.env.PORT || 4000
 
 app.use(bodyParser.json())
 
-app.post('/add', async (req, res) => {
+app.post('/add/:msg',async (req, res) => {
+  // try{
+  //   const myuser = new User(req.body);
+  //   await myuser.save();
+  //   res.send(myuser);
+  // }catch(err){
+  //   console.log("error"+err);
+  // }
+  
   try{
-    const myuser = new User(req.body);
-    await myuser.save();
-    console.log("Create User "+req.body.name);
+    var msg = req.params.msg;
+  //   const mess = new mongoose.Schema({
+  //     message: String,
+  // });
+  // mess.message = msg;
+
+  // var UserModel = mongoose.model('Mess', mess);
+  //   await UserModel.save();
+  //   res.send(mess);
+
+  let mess = new Message({
+    message: msg.toString()
+  })
+  
+  await mess.save()
+
+  res.send(mess);
+     
   }catch(err){
-    console.log("error"+err);
+    res.send("error => "+err);
   }
 })
 
 
 app.get('/', (req, res) => {
-  res.send(connectDB.toString());
+  //res.send(connectDB.toString());
 })
 
 
@@ -310,16 +333,18 @@ msg= req.params.msg
   }
   else{
     
-    /////
-    var mm = { message: msg }
+    // /////
     try{
-      //const myMessage = new Message(msg);
-      await mm.save();
-      //console.log("Create Message ");
+    let mess = new Message({
+      message: msg.toString()
+    })
+    
+    await mess.save()
+         
     }catch(err){
-      //console.log("error"+err);
+      
     }
-    /////
+    // /////
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
