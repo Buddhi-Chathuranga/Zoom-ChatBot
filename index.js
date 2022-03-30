@@ -259,7 +259,7 @@ function getSen (url){
 }
 ////////////////////////////////////
 
-msg= req.params.msg
+msg= req.params.msg;
 
   getChatbotToken()
 
@@ -334,12 +334,16 @@ msg= req.params.msg
   else{
     
     // /////
-    // let mess = new Message({
-    //   message: msg.toString()
-    // })
+    let e
+    try{
+    let mess = new Message({
+      message: msg
+    })
     
-    // await mess.save()
-  
+    await mess.save()
+    }catch(err){
+      e=err
+    }
     // /////
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
@@ -364,7 +368,7 @@ msg= req.params.msg
                   "sections": [
                       {
                         "type": "message",
-                        "text": replay
+                        "text": e.toString()
                       }
                   ], 
                   "footer": n,
