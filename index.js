@@ -334,16 +334,12 @@ msg= req.params.msg
   else{
     
     // /////
-    try{
     let mess = new Message({
       message: msg.toString()
     })
     
     await mess.save()
-         
-    }catch(err){
-      
-    }
+  
     // /////
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
