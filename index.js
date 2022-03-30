@@ -1,7 +1,11 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
+const mongoose = require('mongoose');
+
+const User = require("./model/user");
+const Message = require("./model/message");
 
 const { Client } = require('pg')
 const { max } = require('pg/lib/defaults')
@@ -10,6 +14,23 @@ const pg = new Client({
   connectionString: connectStr,
   ssl: { rejectUnauthorized: false }
 });
+
+const URI = 'mongodb+srv://buddhi:1234@zoomchatbot.483go.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+
+// mongoose.connect(URI, 
+//   {useNewUrlParser: true},).then(() => {
+//      console.log("Successfully connected to the database");    
+//  }).catch(err => {
+//      console.log('Could not connect to the database. Exiting now...', err);
+//      process.exit();
+//  });
+
+mongoose.connect(URI, 
+  {useNewUrlParser: true},
+  (req,res) => {
+    console.log("Successfully connected to the database");
+  }
+ );
 
 pg.connect().catch((error) => {
   console.log('Error connecting to database', error)
@@ -20,72 +41,20 @@ const port = process.env.PORT || 4000
 
 app.use(bodyParser.json())
 
+app.post('/add', async (req, res) => {
+  try{
+    const myuser = new User(req.body);
+    await myuser.save();
+    console.log("Create User "+req.body.name);
+  }catch(err){
+    console.log("error"+err);
+  }
+})
+
+
 app.get('/', (req, res) => {
-  res.send('Welcome to the Chatbot for Zoom! by Buddhi')
+  res.send(connectDB.toString());
 })
-
-app.get('/write', (req, res) => {
-  const trigger = 
-    ["hi", "hey"];
-  const fs = require('fs');
-  const customer = {
-    firstName: trigger,
-  };
-
-  const jsonString = JSON.stringify(customer);
-
-  fs.writeFile('./Chat.json', jsonString, err => {
-    if (err) {
-      res.send('Error writing file', err);
-    } else {
-      res.send('Successfully wrote file');
-    }
-  });
-})
-
-app.get('/get', (req, res) =>{
-  const fs = require('fs');
-
-  let rawdata = fs.readFileSync('Chat.json');
-  let log = JSON.parse(rawdata);
-  let arr = log.chat;
-  arr.push('aaa');
-//
-  const data = {
-    chat: arr,
-  };
-
-  const jsonString = JSON.stringify(data);
-
-  fs.writeFile('./Chat.json', jsonString, err => {
-    if (err) {
-      res.send('Error writing file', err);
-    } else {
-      res.send(data);
-    }
-  });
-})
-
-  app.get('/clear', (req, res) => {
-    const fs = require('fs');
-
-    let rawdata = fs.readFileSync('Chat.json');
-    let log = JSON.parse(rawdata);
-    let arr1 = [];
-    const data = {
-      chat: arr1,
-    };
-  
-    const jsonString = JSON.stringify(data);
-  
-    fs.writeFile('./Chat.json', jsonString, err => {
-      if (err) {
-        res.send('Error writing file', err);
-      } else {
-        res.send(data);
-      }
-    });
-  })
 
 
 app.get('/authorize', (req, res) => {
@@ -112,6 +81,9 @@ app.get('/zoomverify/verifyzoom.html', (req, res) => {
   res.send(process.env.zoom_verification_code)
 })
 
+app.get('/test', (req, res) => {
+    
+})
 
 
 
@@ -291,31 +263,9 @@ msg= req.params.msg
 
     const url = getSentiment(msg);
     const n = getSen(url);
-
-    var msgs = [];
     
     //url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
     if(msg=="Bye"){
-
-      const fs = require('fs');
-
-    let rawdata = fs.readFileSync('Chat.json');
-    let log = JSON.parse(rawdata);
-    let arr1 = [];
-    const data = {
-      chat: arr1,
-    };
-  
-    const jsonString = JSON.stringify(data);
-  
-    fs.writeFile('./Chat.json', jsonString, err => {
-      if (err) {
-        res.send('Error writing file', err);
-      } else {
-        res.send(data);
-      }
-    });
-
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -339,7 +289,7 @@ msg= req.params.msg
                   "sections": [
                       {
                         "type": "message",
-                        "text": log
+                        "text": replay
                       }
                   ], 
                   "footer": ""
@@ -359,26 +309,16 @@ msg= req.params.msg
     })
   }
   else{
-    const fs = require('fs');
-
-  let rawdata = fs.readFileSync('Chat.json');
-  let log = JSON.parse(rawdata);
-  let arr = log.chat;
-  arr.push(msg);
-//
-  const data = {
-    chat: arr,
-  };
-
-  const jsonString = JSON.stringify(data);
-
-  fs.writeFile('./Chat.json', jsonString, err => {
-    if (err) {
-      res.send('Error writing file', err);
-    } else {
-      res.send(data);
+    
+    /////
+    try{
+      const myMessage = new Message(req.body);
+      await myMessage.save();
+      console.log("Create Message ");
+    }catch(err){
+      console.log("error"+err);
     }
-  });
+    /////
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
