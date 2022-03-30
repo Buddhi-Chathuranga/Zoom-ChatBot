@@ -311,12 +311,13 @@ msg= req.params.msg
   else{
     
     /////
+    var mm = { message: msg }
     try{
-      const myMessage = new Message(msg);
-      await myMessage.save();
-      console.log("Create Message ");
+      //const myMessage = new Message(msg);
+      await mm.save();
+      //console.log("Create Message ");
     }catch(err){
-      console.log("error"+err);
+      //console.log("error"+err);
     }
     /////
     request({
