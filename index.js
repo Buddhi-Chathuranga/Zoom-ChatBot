@@ -1,4 +1,4 @@
-require('dotenv').config();
+yhhhjrequire('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
@@ -336,11 +336,11 @@ msg= req.params.msg;
     // /////
     let e
     try{
-    let mess = new Message({
-      message: msg
-    })
-    
-    await mess.save()
+      let mess = new Message({
+        message: msg.toString()
+      })
+      
+      await mess.save()
     }catch(err){
       e=err
     }
@@ -368,7 +368,7 @@ msg= req.params.msg;
                   "sections": [
                       {
                         "type": "message",
-                        "text": e.toString()
+                        "text": replay+" "+e.toString()
                       }
                   ], 
                   "footer": n,
