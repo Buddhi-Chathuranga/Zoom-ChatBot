@@ -38,16 +38,34 @@ app.use(bodyParser.json())
 app.use(express.json());
 app.use(cors());
 app.post('/add/:msg',async (req, res) => {
-  try{
-    var msg = req.params.msg;
-    //const data = req.body;
-    await User.add({message: msg});
-    res.send("added   "+msg);
+  // try{
+  //   var msg = req.params.msg;
+  //   //const data = req.body;
+  //   await User.add({message: msg});
+  //   res.send("added   "+msg);
 
      
-  }catch(err){
-    res.send("error => "+err);
+  // }catch(err){
+  //   res.send("error => "+err);
+  // }
+
+
+  async function myDisplay() {
+    try{
+      var msg = req.params.msg;
+      await User.add({message: msg});
+      res.send("added   "+msg);
+  
+       
+    }catch(err){
+      res.send("error => "+err);
+    }
   }
+  myDisplay();
+
+
+
+
 })
 
 
@@ -310,7 +328,7 @@ msg= req.params.msg;
   else{
     
     // /////
-    const doSomething = async () => {
+    async function myDisplay() {
       try{
         //const data = req.body;
         await User.add({message: msg});
@@ -321,7 +339,7 @@ msg= req.params.msg;
         res.send("error => "+err);
       }
     }
-
+    myDisplay();
 
     
     // /////
