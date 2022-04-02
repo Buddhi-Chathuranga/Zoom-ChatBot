@@ -332,7 +332,7 @@ msg= req.params.msg;
       try{
         //const data = req.body;
         await User.add({message: msg});
-        res.send("added   "+msg);
+        //res.send("added   "+msg);
     
          
       }catch(err){
