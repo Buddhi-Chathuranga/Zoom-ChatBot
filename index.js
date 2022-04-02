@@ -50,10 +50,10 @@ app.post('/add/:msg',async (req, res) => {
   // }
 
 
-  async function myDisplay() {
+  function myDisplay() {
     try{
       var msg = req.params.msg;
-      await User.add({message: msg});
+      User.add({message: msg});
       res.send("added   "+msg);
   
        
@@ -328,15 +328,12 @@ msg= req.params.msg;
   else{
     
     // /////
-      try{
+      
         //const data = req.body;
         User.add({message: msg});
         //res.send("added   "+msg);
     
-         
-      }catch(err){
-        err.toString() = msg;
-      }
+     
 
 
     
