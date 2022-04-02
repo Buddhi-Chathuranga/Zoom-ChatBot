@@ -274,7 +274,7 @@ msg= req.params.msg;
     })
   }
 
-  async function sendChat (chatbotToken) {
+  function sendChat (chatbotToken) {
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
 
@@ -330,7 +330,7 @@ msg= req.params.msg;
     // /////
       try{
         //const data = req.body;
-        await User.add({message: msg});
+        User.add({message: msg});
         //res.send("added   "+msg);
     
          
