@@ -257,7 +257,7 @@ msg= req.params.msg;
 
   getChatbotToken()
 
-  function getChatbotToken () {
+  async function getChatbotToken () {
     request({
       url: `https://zoom.us/oauth/token?grant_type=client_credentials`,
       method: 'POST',
@@ -328,7 +328,6 @@ msg= req.params.msg;
   else{
     
     // /////
-    async function myDisplay() {
       try{
         //const data = req.body;
         await User.add({message: msg});
@@ -338,8 +337,7 @@ msg= req.params.msg;
       }catch(err){
         res.send("error => "+err);
       }
-    }
-    myDisplay();
+
 
     
     // /////
