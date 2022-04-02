@@ -1,11 +1,11 @@
-yhhhjrequire('dotenv').config();
+require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
-const mongoose = require('mongoose');
+const cors = require("cors");
+const User = require("./config");
 
-const User = require("./model/user");
-const Message = require("./model/message");
+
 
 const { Client } = require('pg')
 const { max } = require('pg/lib/defaults')
@@ -25,12 +25,7 @@ const URI = 'mongodb+srv://buddhi:1234@zoomchatbot.483go.mongodb.net/myFirstData
 //      process.exit();
 //  });
 
-mongoose.connect(URI, 
-  {useNewUrlParser: true},
-  (req,res) => {
-    console.log("Successfully connected to the database");
-  }
- );
+
 
 pg.connect().catch((error) => {
   console.log('Error connecting to database', error)
@@ -40,34 +35,15 @@ const app = express()
 const port = process.env.PORT || 4000
 
 app.use(bodyParser.json())
-
+app.use(express.json());
+app.use(cors());
 app.post('/add/:msg',async (req, res) => {
-  // try{
-  //   const myuser = new User(req.body);
-  //   await myuser.save();
-  //   res.send(myuser);
-  // }catch(err){
-  //   console.log("error"+err);
-  // }
-  
   try{
     var msg = req.params.msg;
-  //   const mess = new mongoose.Schema({
-  //     message: String,
-  // });
-  // mess.message = msg;
+    //const data = req.body;
+    await User.add({message: msg});
+    res.send("added   "+msg);
 
-  // var UserModel = mongoose.model('Mess', mess);
-  //   await UserModel.save();
-  //   res.send(mess);
-
-  let mess = new Message({
-    message: msg.toString()
-  })
-  
-  await mess.save()
-
-  res.send(mess);
      
   }catch(err){
     res.send("error => "+err);
@@ -334,15 +310,14 @@ msg= req.params.msg;
   else{
     
     // /////
-    let e
     try{
-      let mess = new Message({
-        message: msg.toString()
-      })
-      
-      await mess.save()
+      //const data = req.body;
+      User.add({message: msg});
+      res.send("added   "+msg);
+  
+       
     }catch(err){
-      e=err
+      res.send("error => "+err);
     }
     // /////
     request({
@@ -368,7 +343,7 @@ msg= req.params.msg;
                   "sections": [
                       {
                         "type": "message",
-                        "text": replay+" "+e.toString()
+                        "text": replay+" "+e.to
                       }
                   ], 
                   "footer": n,
