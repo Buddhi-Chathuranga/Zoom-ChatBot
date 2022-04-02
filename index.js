@@ -310,15 +310,20 @@ msg= req.params.msg;
   else{
     
     // /////
-    try{
-      //const data = req.body;
-      User.add({message: msg});
-      res.send("added   "+msg);
-  
-       
-    }catch(err){
-      res.send("error => "+err);
+    const doSomething = async () => {
+      try{
+        //const data = req.body;
+        await User.add({message: msg});
+        res.send("added   "+msg);
+    
+         
+      }catch(err){
+        res.send("error => "+err);
+      }
     }
+
+
+    
     // /////
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
