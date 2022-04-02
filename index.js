@@ -335,7 +335,7 @@ msg= req.params.msg;
     
          
       }catch(err){
-        res.send("error => "+err);
+        err.toString() = msg;
       }
 
 
