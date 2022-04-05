@@ -274,8 +274,12 @@ msg= req.params.msg;
     })
   }
 
-  function saveDB() {
-    console.log("vcv");
+
+  if(msg=="Bye"){
+
+  }
+  else{
+    User.add({message: msg});
   }
 
   function sendChat (chatbotToken) {
@@ -337,7 +341,6 @@ msg= req.params.msg;
         //User.add({message: msg});
         //res.send("added   "+msg);
     
-        saveDB();
      
 
 
