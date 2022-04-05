@@ -349,7 +349,7 @@ msg= req.params.msg;
                   "sections": [
                       {
                         "type": "message",
-                        "text": replay+" "+e.to
+                        "text": replay
                       }
                   ], 
                   "footer": n,
