@@ -330,8 +330,9 @@ msg= req.params.msg;
     // /////
       
         //const data = req.body;
-        User.add({message: msg});
+        //User.add({message: msg});
         //res.send("added   "+msg);
+        console.log("vcv");
     
      
 
