@@ -279,7 +279,7 @@ msg= req.params.msg;
 
   }
   else{
-    User.add({message: msg});
+    //User.add({message: msg});
   }
 
   function sendChat (chatbotToken) {
