@@ -332,14 +332,15 @@ msg= req.params.msg;
         //const data = req.body;
         //User.add({message: msg});
         //res.send("added   "+msg);
-        console.log("vcv");
+        
     
      
 
 
     
     // /////
-    request({
+    request(console.log("vcv"),{
+      
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
       json: true,
