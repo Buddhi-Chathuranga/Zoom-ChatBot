@@ -274,22 +274,12 @@ msg= req.params.msg;
     })
   }
 
-
-  
-
   function sendChat (chatbotToken) {
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
 
     const url = getSentiment(msg);
     const n = getSen(url);
-
-    // if(msg=="Bye"){
-
-    // }
-    // else{
-    //   User.add({message: msg});
-    // }
     
     //url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
     if(msg=="Bye"){
