@@ -326,18 +326,6 @@ msg= req.params.msg;
     })
   }
   else{
-    
-    // /////
-      
-        //const data = req.body;
-        //User.add({message: msg});
-        //res.send("added   "+msg);
-    
-     
-
-
-    
-    // /////
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
@@ -380,8 +368,9 @@ msg= req.params.msg;
         console.log(body)
       }
     })
+  
   }
-  }
+}
 
   
 })
