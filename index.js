@@ -274,6 +274,10 @@ msg= req.params.msg;
     })
   }
 
+  function saveDB() {
+    console.log("vcv");
+  }
+
   function sendChat (chatbotToken) {
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
@@ -332,15 +336,14 @@ msg= req.params.msg;
         //const data = req.body;
         //User.add({message: msg});
         //res.send("added   "+msg);
-        
     
+        saveDB();
      
 
 
     
     // /////
-    request(console.log("vcv"),{
-      
+    request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
       method: 'POST',
       json: true,
