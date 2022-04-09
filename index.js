@@ -3,7 +3,10 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const cors = require("cors");
-const User = require("./config");
+//const User = require("./config");
+
+const firebase = require("firebase")
+
 
 
 
@@ -37,41 +40,110 @@ const port = process.env.PORT || 4000
 app.use(bodyParser.json())
 app.use(express.json());
 app.use(cors());
-app.post('/add/:msg',async (req, res) => {
-  // try{
-  //   var msg = req.params.msg;
-  //   //const data = req.body;
-  //   await User.add({message: msg});
-  //   res.send("added   "+msg);
-
-     
-  // }catch(err){
-  //   res.send("error => "+err);
-  // }
 
 
-  function myDisplay() {
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./permision.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://zoomchatbot-545fd-default-rtdb.firebaseio.com"
+});
+app.use(cors( { origin:true }));
+const db = admin.firestore();
+
+app.post('/add/:msg',(req, res) => {
+  const msg = req.params.msg;
+  (async () => {
+
     try{
-      var msg = req.params.msg;
-      User.add({message: msg});
-      res.send("added   "+msg);
-  
-       
-    }catch(err){
-      res.send("error => "+err);
+          await db.collection('Messages').doc()
+          .create({
+            message: msg
+          })
+
+          return res.status(200).send();
     }
-  }
-  myDisplay();
+    catch(error){
+        console.log(error);
+        return res.status(500).send(error);
+    }
+
+  })();
+
+});
 
 
+app.get('/get',(req, res) => {
+  // const snapshot = await User.get();
+  // const list = snapshot.docs.map((doc) => ({ ...doc.data().message }))
+  // res.send(list);
+
+  (async () => {
+
+    try{
+          let query = db.collection('Messages');
+          let response = [];
 
 
-})
+          await query.get().then(querySnapshot => {
+            let docs = querySnapshot.docs;
+
+            for(let doc of docs){
+              const selectedItem = {
+                  message: doc.data().message
+              };
+              response.push(selectedItem.message);
+            };
+            return response;
+          })
+          return res.status(200).send(response);
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).send(error);
+    }
+
+  })();
+  
+ 
+});
 
 
-app.get('/', (req, res) => {
-  //res.send(connectDB.toString());
-})
+app.get('/get', async (req, res) => {
+  
+  (async () => {
+
+    try{
+          let query = db.collection('Messages');
+          let response = [];
+
+
+          await query.get().then(querySnapshot => {
+            let docs = querySnapshot.docs;
+
+            for(let doc of docs){
+              const selectedItem = {
+                  message: doc.data().message
+              };
+              response.push(selectedItem.message);
+            };
+            return response;
+          })
+          return res.status(200).send(response);
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).send(error);
+    }
+
+  })();
+  
+ 
+});
+
+
 
 
 app.get('/authorize', (req, res) => {
@@ -281,54 +353,54 @@ msg= req.params.msg;
     const url = getSentiment(msg);
     const n = getSen(url);
     if(msg=="Bye"){
-
+      
     }else{
-      User.add({message: msg});
+      
     }
     
-    //url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
     if(msg=="Bye"){
-    request({
-      url: 'https://api.zoom.us/v2/im/chat/messages',
-      method: 'POST',
-      json: true,
-      body: {
-        'robot_jid': process.env.zoom_bot_jid,
-        'to_jid': req.body.payload.toJid,
-        'account_id': req.body.payload.accountId,
-        'content': {
-          'head': {
-            'text': 'Zoom_Bot',
-            "style": {
-              "color": "#0099ff",
-              "bold": true,
-              "italic": true
+      request({
+        url: 'https://api.zoom.us/v2/im/chat/messages',
+        method: 'POST',
+        json: true,
+        body: {
+          'robot_jid': process.env.zoom_bot_jid,
+          'to_jid': req.body.payload.toJid,
+          'account_id': req.body.payload.accountId,
+          'content': {
+            'head': {
+              'text': 'Zoom_Bot',
+              "style": {
+                "color": "#0099ff",
+                "bold": true,
+                "italic": true
+              },
             },
-          },
-                'body': [{
-                  "type": "section",
-                  "sidebar_color": "#0099ff",
-                  "sections": [
-                      {
-                        "type": "message",
-                        "text": replay
-                      }
-                  ], 
-                  "footer": ""
-                }]
+                  'body': [{
+                    "type": "section",
+                    "sidebar_color": "#0099ff",
+                    "sections": [
+                        {
+                          "type": "message",
+                          "text": replay
+                        }
+                    ], 
+                    "footer": n,
+                    "footer_icon": url
+                  }]
+          }
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + chatbotToken
         }
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + chatbotToken
-      }
-    }, (error, httpResponse, body) => {
-      if (error) {
-        console.log('Error sending chat.', error)
-      } else {
-        console.log(body)
-      }
-    })
+      }, (error, httpResponse, body) => {
+        if (error) {
+          console.log('Error sending chat.', error)
+        } else {
+          console.log(body)
+        }
+      })
   }
   else{
     request({
@@ -357,8 +429,7 @@ msg= req.params.msg;
                         "text": replay
                       }
                   ], 
-                  "footer": n,
-                  "footer_icon": url
+                  "footer": ""
                 }]
         }
       },
