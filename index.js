@@ -260,49 +260,49 @@ app.post('/unsplash', (req, res) => {
   /////////////////////////////////////
 
   ///////////////----02----////////////
-  function getSentiment(msg) {
-    var natural = require('natural');
-    var Analyzer = natural.SentimentAnalyzer;
-    var stemmer = natural.PorterStemmer;
-    var analyzer = new Analyzer("English", stemmer, "afinn");
+  //function getSentiment(msg) {
+  //   var natural = require('natural');
+  //   var Analyzer = natural.SentimentAnalyzer;
+  //   var stemmer = natural.PorterStemmer;
+  //   var analyzer = new Analyzer("English", stemmer, "afinn");
 
 
-    var natural = require('natural');
-    var tokenizer = new natural.WordTokenizer();
-    var trimmedText = tokenizer.tokenize(msg);
+  //   var natural = require('natural');
+  //   var tokenizer = new natural.WordTokenizer();
+  //   var trimmedText = tokenizer.tokenize(msg);
 
-    var k = analyzer.getSentiment(trimmedText);
-    var url;
-    if (k > 0) {
-      url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
-      return url;
-    }
-    else if (k == 0) {
-      url = "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037";
-      return url;
-    }
-    else if (k < 0) {
-      url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
-      return url;
-    }
-  }
+  //   var k = analyzer.getSentiment(trimmedText);
+  //   var url;
+  //   if (k > 0) {
+  //     url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
+  //     return url;
+  //   }
+  //   else if (k == 0) {
+  //     url = "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037";
+  //     return url;
+  //   }
+  //   else if (k < 0) {
+  //     url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
+  //     return url;
+  //   }
+  // }
 
-  function getSen(url) {
-    var k;
-    if (url == "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png") {
-      k = "Very Happy";
-    }
-    else if (url == "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037") {
-      k = "Happy";
-    }
-    else if (url == "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png") {
-      k = "Sad";
-    }
-    else {
+  // function getSen(url) {
+  //   var k;
+  //   if (url == "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png") {
+  //     k = "Very Happy";
+  //   }
+  //   else if (url == "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037") {
+  //     k = "Happy";
+  //   }
+  //   else if (url == "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png") {
+  //     k = "Sad";
+  //   }
+  //   else {
 
-    }
-    return k;
-  }
+  //   }
+  //   return k;
+  // }
   ////////////////////////////////////
 
   msg = req.params.msg;
@@ -379,7 +379,7 @@ app.post('/unsplash', (req, res) => {
   }
 
 
-})
+});
 
 app.post('/deauthorize', (req, res) => {
   if (req.headers.authorization === process.env.zoom_verification_token) {
