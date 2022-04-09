@@ -3,36 +3,16 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const cors = require("cors");
-//const User = require("./config");
 
 const firebase = require("firebase")
 
 
 
 
-const { Client } = require('pg')
-const { max } = require('pg/lib/defaults')
-const connectStr = process.env.DATABASE_URL;
-const pg = new Client({
-  connectionString: connectStr,
-  ssl: { rejectUnauthorized: false }
-});
-
-const URI = 'mongodb+srv://buddhi:1234@zoomchatbot.483go.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-
-// mongoose.connect(URI, 
-//   {useNewUrlParser: true},).then(() => {
-//      console.log("Successfully connected to the database");    
-//  }).catch(err => {
-//      console.log('Could not connect to the database. Exiting now...', err);
-//      process.exit();
-//  });
 
 
 
-pg.connect().catch((error) => {
-  console.log('Error connecting to database', error)
-})
+
 
 const app = express()
 const port = process.env.PORT || 4000
