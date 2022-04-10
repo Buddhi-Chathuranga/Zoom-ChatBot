@@ -347,11 +347,10 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
+      const replay = proccessMessage(msg);
       const img = getSentiment("sad");
       const n = getSen(img);
 
-      const a = img.toString();
-      const b = n.toString();
       
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
@@ -376,11 +375,11 @@ app.post('/unsplash', (req, res) => {
               "sections": [
                 {
                   "type": "message",
-                  "text": msg
+                  "text": replay
                 }
               ],
-              "footer": a,
-              "footer_icon": b
+              "footer": img,
+              "footer_icon": n
             }]
           }
         },
