@@ -85,10 +85,8 @@ app.get('/s', (req, res) => {
           };
           fullChat.push(selectedItem.message);
         };
-        return fullChat;
       })
-      fullChat.reverse();
-      return res.status(200).send(fullChat.join(". "));
+      return res.status(200).send(fullChat);
     }
     catch (error) {
       console.log(error);
@@ -281,11 +279,11 @@ app.post('/unsplash', (req, res) => {
       try {
         await db.collection('Messages').doc()
           .create({
-            message: msg
+            message: replay
           })
         await db.collection('Messages').doc()
           .create({
-            message: replay
+            message: msg
           })
 
         return res.status(200).send();
@@ -298,7 +296,7 @@ app.post('/unsplash', (req, res) => {
     })();
 
     ///////
-    let fullChat = [];
+    var fullChat = [];
 
     if (msg == "Bye" || msg == "bye") {
       (async () => {
@@ -316,7 +314,6 @@ app.post('/unsplash', (req, res) => {
               fullChat.push(selectedItem.message);
             };
           })
-          fullChat.reverse();
           res.status(200).send(fullChat.join(". "));
         }
         catch (error) {
