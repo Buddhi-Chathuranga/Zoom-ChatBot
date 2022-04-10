@@ -317,7 +317,7 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      url = getSentiment(fullChat.join(". "));
+      const img = getSentiment(fullChat.join(". "));
       //const n =getSen(url);
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
@@ -346,7 +346,7 @@ app.post('/unsplash', (req, res) => {
                 }
               ],
               "footer": "n",
-              "footer_icon": url
+              "footer_icon": img
             }]
           }
         },
