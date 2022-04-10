@@ -305,7 +305,7 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const url = fullChat;
+      const url = fullChat.join(". ");
       const n = getSen(url);
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
