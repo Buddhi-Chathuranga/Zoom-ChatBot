@@ -291,8 +291,10 @@ app.post('/unsplash', (req, res) => {
               };
               fullChat.push(selectedItem.message);
             };
+            fullChat.reverse();
             return fullChat;
           })
+          fullChat.reverse();
           return res.status(200).send(fullChat.join(". "));
         }
         catch (error) {
@@ -305,7 +307,7 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const img = getSentiment(fullChat.join(". "));
+      url = getSentiment(fullChat.join(". "));
       //const n =getSen(url);
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
@@ -334,7 +336,7 @@ app.post('/unsplash', (req, res) => {
                 }
               ],
               "footer": "n",
-              "footer_icon": img
+              "footer_icon": url
             }]
           }
         },
