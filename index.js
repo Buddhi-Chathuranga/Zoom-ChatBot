@@ -247,9 +247,39 @@ app.post('/unsplash', (req, res) => {
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
 
+
+
+    //save//
+    (async () => {
+
+      try {
+        let query = db.collection('Messages');
+
+
+
+        await query.get().then(querySnapshot => {
+          let docs = querySnapshot.docs;
+
+          for (let doc of docs) {
+            const selectedItem = {
+              message: doc.data().message
+            };
+            response.push(selectedItem.message);
+          };
+          return response;
+        })
+        return res.status(200).send(response);
+      }
+      catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+      }
+
+    })();
+    ///////
     let fullChat = [];
 
-    if (!(msg == "Bye" || msg == "bye")) {
+    if (msg == "Bye" || msg == "bye") {
       (async () => {
 
         try {
@@ -274,34 +304,7 @@ app.post('/unsplash', (req, res) => {
         }
 
       })();
-    } else {
-      (async () => {
-
-        try {
-          let query = db.collection('Messages');
-
-
-
-          await query.get().then(querySnapshot => {
-            let docs = querySnapshot.docs;
-
-            for (let doc of docs) {
-              const selectedItem = {
-                message: doc.data().message
-              };
-              response.push(selectedItem.message);
-            };
-            return response;
-          })
-          return res.status(200).send(response);
-        }
-        catch (error) {
-          console.log(error);
-          return res.status(500).send(error);
-        }
-
-      })();
-    }
+    } 
 
 
 
