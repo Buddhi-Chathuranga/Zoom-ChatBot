@@ -249,7 +249,6 @@ app.post('/unsplash', (req, res) => {
     const replay = proccessMessage(msg);
 
 
-
     //Save the Chat//
 
     (async () => {
@@ -307,7 +306,7 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const url = fullChat.join(". ");
+      const url = fullChat;
       const n = getSen(url);
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
