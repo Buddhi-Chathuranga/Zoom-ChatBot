@@ -259,7 +259,7 @@ app.post('/unsplash', (req, res) => {
           .create({
             message: msg
           })
-          await db.collection('Messages').doc()
+        await db.collection('Messages').doc()
           .create({
             message: replay
           })
@@ -307,7 +307,8 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      url = getSentiment(fullChat.join(". "));
+      const url = getSentiment(fullChat.join(". "));
+      //const n = getSen(url);
       //const n =getSen(url);
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
@@ -352,7 +353,7 @@ app.post('/unsplash', (req, res) => {
         }
       })
     }
-    else{
+    else {
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
         method: 'POST',
