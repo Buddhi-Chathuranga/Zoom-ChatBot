@@ -208,22 +208,22 @@ app.post('/unsplash', (req, res) => {
     }
   }
 
-  function getSen(url) {
-    var k;
-    if (url == "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png") {
-      k = "Very Happy";
-    }
-    else if (url == "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037") {
-      k = "Happy";
-    }
-    else if (url == "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png") {
-      k = "Sad";
-    }
-    else {
+  // function getSen(url) {
+  //   var k;
+  //   if (url == "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png") {
+  //     k = "Very Happy";
+  //   }
+  //   else if (url == "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037") {
+  //     k = "Happy";
+  //   }
+  //   else if (url == "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png") {
+  //     k = "Sad";
+  //   }
+  //   else {
 
-    }
-    return k;
-  }
+  //   }
+  //   return k;
+  // }
   ////////////////////////////////////
   getChatbotToken()
 
@@ -268,6 +268,22 @@ app.post('/unsplash', (req, res) => {
       }
 
     })();
+    (async () => {
+
+      try {
+        await db.collection('Messages').doc()
+          .create({
+            message: replay
+          })
+
+        return res.status(200).send();
+      }
+      catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+      }
+
+    })();
 
     ///////
     let fullChat = [];
@@ -302,7 +318,7 @@ app.post('/unsplash', (req, res) => {
 
     if (msg == "Bye" || msg == "bye") {
       url = getSentiment(fullChat.join(". "));
-      const n =getSen(url);
+      //const n =getSen(url);
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
         method: 'POST',
@@ -329,7 +345,7 @@ app.post('/unsplash', (req, res) => {
                   "text": msg
                 }
               ],
-              "footer": n,
+              "footer": "n",
               "footer_icon": url
             }]
           }
