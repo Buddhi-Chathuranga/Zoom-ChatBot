@@ -1,11 +1,8 @@
-require('dotenv').config();
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const cors = require("cors");
-
-const firebase = require("firebase")
-
 
 const { Client } = require('pg')
 const { max } = require('pg/lib/defaults')
@@ -19,6 +16,7 @@ pg.connect().catch((error) => {
   console.log('Error connecting to database', error)
 })
 
+const firebase = require("firebase")
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -39,97 +37,13 @@ admin.initializeApp({
 app.use(cors({ origin: true }));
 const db = admin.firestore();
 
-app.post('/add/:msg', (req, res) => {
-  const msg = req.params.msg;
-  (async () => {
+app.get('/', (req, res) => {
+  res.send('Welcome to the Chatbot for Zoom! by Buddhi')
+})
 
-    try {
-      await db.collection('Messages').doc()
-        .create({
-          message: msg
-        })
-
-      return res.status(200).send();
-    }
-    catch (error) {
-      console.log(error);
-      return res.status(500).send(error);
-    }
-
-  })();
-
-});
-
-
-app.get('/get', (req, res) => {
-  // const snapshot = await User.get();
-  // const list = snapshot.docs.map((doc) => ({ ...doc.data().message }))
-  // res.send(list);
-
-  (async () => {
-
-    try {
-      let query = db.collection('Messages');
-      let response = [];
-
-
-      await query.get().then(querySnapshot => {
-        let docs = querySnapshot.docs;
-
-        for (let doc of docs) {
-          const selectedItem = {
-            message: doc.data().message
-          };
-          response.push(selectedItem.message);
-        };
-        return response;
-      })
-      return res.status(200).send(response);
-    }
-    catch (error) {
-      console.log(error);
-      return res.status(500).send(error);
-    }
-
-  })();
-
-
-});
-
-
-app.get('/get', async (req, res) => {
-
-  (async () => {
-
-    try {
-      let query = db.collection('Messages');
-      let response = [];
-
-
-      await query.get().then(querySnapshot => {
-        let docs = querySnapshot.docs;
-
-        for (let doc of docs) {
-          const selectedItem = {
-            message: doc.data().message
-          };
-          response.push(selectedItem.message);
-        };
-        return response;
-      })
-      return res.status(200).send(response);
-    }
-    catch (error) {
-      console.log(error);
-      return res.status(500).send(error);
-    }
-
-  })();
-
-
-});
-
-
+app.get('/test/:msg', (req, res) => {
+  res.send('Testing')
+})
 
 
 app.get('/authorize', (req, res) => {
@@ -156,14 +70,11 @@ app.get('/zoomverify/verifyzoom.html', (req, res) => {
   res.send(process.env.zoom_verification_code)
 })
 
-app.get('/test', (req, res) => {
-
-})
 
 
 
 app.post('/unsplash', (req, res) => {
-  //////////////////-----01------///////////////////
+  /////////////////////////////////////
   const trigger = [
     ["hi", "hey", "hello", "good morning", "good afternoon"],
     ["how are you", "how is life", "how are things"],
@@ -263,56 +174,10 @@ app.post('/unsplash', (req, res) => {
     }
     return item;
   }
-  /////////////////////////////////////
 
-  ///////////////----02----////////////
-  //function getSentiment(msg) {
-  //   var natural = require('natural');
-  //   var Analyzer = natural.SentimentAnalyzer;
-  //   var stemmer = natural.PorterStemmer;
-  //   var analyzer = new Analyzer("English", stemmer, "afinn");
+  msg = req.params.msg
 
-
-  //   var natural = require('natural');
-  //   var tokenizer = new natural.WordTokenizer();
-  //   var trimmedText = tokenizer.tokenize(msg);
-
-  //   var k = analyzer.getSentiment(trimmedText);
-  //   var url;
-  //   if (k > 0) {
-  //     url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
-  //     return url;
-  //   }
-  //   else if (k == 0) {
-  //     url = "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037";
-  //     return url;
-  //   }
-  //   else if (k < 0) {
-  //     url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
-  //     return url;
-  //   }
-  // }
-
-  // function getSen(url) {
-  //   var k;
-  //   if (url == "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png") {
-  //     k = "Very Happy";
-  //   }
-  //   else if (url == "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037") {
-  //     k = "Happy";
-  //   }
-  //   else if (url == "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png") {
-  //     k = "Sad";
-  //   }
-  //   else {
-
-  //   }
-  //   return k;
-  // }
-  ////////////////////////////////////
-
-  msg = req.params.msg;
-
+  ///////////////////////////////////////////
   getChatbotToken()
 
   function getChatbotToken() {
@@ -331,14 +196,31 @@ app.post('/unsplash', (req, res) => {
       }
     })
   }
-
   function sendChat(chatbotToken) {
     const msg = req.body.payload.cmd;
     const replay = proccessMessage(msg);
 
-    const url = getSentiment(msg);
-    const n = getSen(url);
+    if((!msg=="Bye" || msg=="bye")){
+      (async () => {
 
+        try {
+          await db.collection('Messages').doc()
+            .create({
+              message: msg
+            })
+    
+          return res.status(200).send();
+        }
+        catch (error) {
+          console.log(error);
+          return res.status(500).send(error);
+        }
+    
+      })();
+    }
+    else{
+
+    }
 
     request({
       url: 'https://api.zoom.us/v2/im/chat/messages',
@@ -350,24 +232,11 @@ app.post('/unsplash', (req, res) => {
         'account_id': req.body.payload.accountId,
         'content': {
           'head': {
-            'text': 'Zoom_Bot',
-            "style": {
-              "color": "#0099ff",
-              "bold": true,
-              "italic": true
-            },
+            'text': 'Zoom_Bot'
           },
           'body': [{
-            "type": "section",
-            "sidebar_color": "#0099ff",
-            "sections": [
-              {
-                "type": "message",
-                "text": msg
-              }
-            ],
-            "footer": n,
-            "footer_icon": url
+            'type': 'message',
+            'text': replay
           }]
         }
       },
@@ -385,7 +254,7 @@ app.post('/unsplash', (req, res) => {
   }
 
 
-});
+})
 
 app.post('/deauthorize', (req, res) => {
   if (req.headers.authorization === process.env.zoom_verification_token) {
