@@ -326,7 +326,7 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const url = getSentiment(fullChat.join(". ").toString());
+      const url = getSentiment(fullChat[0].toString());
       const n = getSen(url);
 
       
