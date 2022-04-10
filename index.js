@@ -3,13 +3,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 
-const { Client } = require('pg')
-const { max } = require('pg/lib/defaults')
-const connectStr = process.env.DATABASE_URL;
-const pg = new Client({
-  connectionString: connectStr,
-  ssl: { rejectUnauthorized: false }
-});
 
 pg.connect().catch((error) => {
   console.log('Error connecting to database', error)
