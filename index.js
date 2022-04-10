@@ -290,8 +290,7 @@ app.post('/unsplash', (req, res) => {
               };
               fullChat.push(selectedItem.message);
             };
-            fullChat.reverse();
-            return fullChat;
+            return fullChat.reverse();
           })
           fullChat.reverse();
           return res.status(200).send(fullChat.join(". "));
