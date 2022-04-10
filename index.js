@@ -181,7 +181,7 @@ app.post('/unsplash', (req, res) => {
 
   ///////////////----02----////////////
 
-  function getSentiment(msg) {
+  function getSentiment(msgs) {
     var natural = require('natural');
     var Analyzer = natural.SentimentAnalyzer;
     var stemmer = natural.PorterStemmer;
@@ -190,7 +190,7 @@ app.post('/unsplash', (req, res) => {
 
     var natural = require('natural');
     var tokenizer = new natural.WordTokenizer();
-    var trimmedText = tokenizer.tokenize(msg);
+    var trimmedText = tokenizer.tokenize(msgs);
 
     var k = analyzer.getSentiment(trimmedText);
     var url;
@@ -309,7 +309,6 @@ app.post('/unsplash', (req, res) => {
     if (msg == "Bye" || msg == "bye") {
       const url = getSentiment(fullChat.join(". "));
       //const n = getSen(url);
-      //const n =getSen(url);
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
         method: 'POST',
