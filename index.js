@@ -258,14 +258,14 @@ app.post('/unsplash', (req, res) => {
           .create({
             message: msg
           })
-  
+
         return res.status(200).send();
       }
       catch (error) {
         console.log(error);
         return res.status(500).send(error);
       }
-  
+
     })();
 
     ///////
@@ -296,39 +296,85 @@ app.post('/unsplash', (req, res) => {
         }
 
       })();
-    } 
+    }
 
 
-
-    request({
-      url: 'https://api.zoom.us/v2/im/chat/messages',
-      method: 'POST',
-      json: true,
-      body: {
-        'robot_jid': process.env.zoom_bot_jid,
-        'to_jid': req.body.payload.toJid,
-        'account_id': req.body.payload.accountId,
-        'content': {
-          'head': {
-            'text': 'Zoom_Bot'
-          },
-          'body': [{
-            'type': 'message',
-            'text': replay
-          }]
+    if (msg == "Bye" || msg == "bye") {
+      getSen(url);
+      request({
+        url: 'https://api.zoom.us/v2/im/chat/messages',
+        method: 'POST',
+        json: true,
+        body: {
+          'robot_jid': process.env.zoom_bot_jid,
+          'to_jid': req.body.payload.toJid,
+          'account_id': req.body.payload.accountId,
+          'content': {
+            'head': {
+              'text': 'Zoom_Bot',
+              "style": {
+                "color": "#0099ff",
+                "bold": true,
+                "italic": true
+              },
+            },
+            'body': [{
+              "type": "section",
+              "sidebar_color": "#0099ff",
+              "sections": [
+                {
+                  "type": "message",
+                  "text": msg
+                }
+              ],
+              "footer": n,
+              "footer_icon": url
+            }]
+          }
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + chatbotToken
         }
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + chatbotToken
-      }
-    }, (error, httpResponse, body) => {
-      if (error) {
-        console.log('Error sending chat.', error)
-      } else {
-        console.log(body)
-      }
-    })
+      }, (error, httpResponse, body) => {
+        if (error) {
+          console.log('Error sending chat.', error)
+        } else {
+          console.log(body)
+        }
+      })
+    }
+    else{
+      request({
+        url: 'https://api.zoom.us/v2/im/chat/messages',
+        method: 'POST',
+        json: true,
+        body: {
+          'robot_jid': process.env.zoom_bot_jid,
+          'to_jid': req.body.payload.toJid,
+          'account_id': req.body.payload.accountId,
+          'content': {
+            'head': {
+              'text': 'Zoom_Bot'
+            },
+            'body': [{
+              'type': 'message',
+              'text': replay
+            }]
+          }
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + chatbotToken
+        }
+      }, (error, httpResponse, body) => {
+        if (error) {
+          console.log('Error sending chat.', error)
+        } else {
+          console.log(body)
+        }
+      })
+    }
   }
 
 
