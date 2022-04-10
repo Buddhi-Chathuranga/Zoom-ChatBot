@@ -69,7 +69,51 @@ app.get('/documentation', (req, res) => {
 app.get('/zoomverify/verifyzoom.html', (req, res) => {
   res.send(process.env.zoom_verification_code)
 })
+app.get('/senti/:msg', (req, res) => {
+  const msg = req.params.msg;
+  function getSentiment(msgs) {
+    var natural = require('natural');
+    var Analyzer = natural.SentimentAnalyzer;
+    var stemmer = natural.PorterStemmer;
+    var analyzer = new Analyzer("English", stemmer, "afinn");
 
+
+    var natural = require('natural');
+    var tokenizer = new natural.WordTokenizer();
+    var trimmedText = tokenizer.tokenize(msgs);
+
+    var k = analyzer.getSentiment(trimmedText);
+    var url;
+    if (k > 0) {
+      url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
+    }
+    else if (k == 0) {
+      url = "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037";
+    }
+    else if (k < 0) {
+      url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
+    }
+    return url;
+  }
+
+  function getSen(url) {
+    var k;
+    if (url == "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png") {
+      k = "Very Happy";
+    }
+    else if (url == "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037") {
+      k = "Happy";
+    }
+    else if (url == "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png") {
+      k = "Sad";
+    }
+    else {
+
+    }
+    return k;
+  }
+  res.redirect(getSentiment(msg).toString())
+})
 
 
 
@@ -303,7 +347,7 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const img = getSentiment(fullChat.join(". "));
+      const img = getSentiment("sad");
       const n = getSen(img);
 
       const a = img.toString();
