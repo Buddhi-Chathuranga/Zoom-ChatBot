@@ -349,7 +349,7 @@ app.post('/unsplash', (req, res) => {
     if (msg == "Bye" || msg == "bye") {
       const msg = req.body.payload.cmd;
       const replay = proccessMessage(msg);
-      const url = getSentiment(fullChat.join(". "));
+      const url = getSentiment("sad");
       const n = getSen(url);
 
       
