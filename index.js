@@ -249,15 +249,14 @@ app.post('/unsplash', (req, res) => {
 
 
 
-    //save//
-    (async () => {
+    //Save the Chat//
 
       try {
         let query = db.collection('Messages');
 
 
 
-        await query.get().then(querySnapshot => {
+        query.get().then(querySnapshot => {
           let docs = querySnapshot.docs;
 
           for (let doc of docs) {
@@ -275,7 +274,6 @@ app.post('/unsplash', (req, res) => {
         return res.status(500).send(error);
       }
 
-    })();
     ///////
     let fullChat = [];
 
