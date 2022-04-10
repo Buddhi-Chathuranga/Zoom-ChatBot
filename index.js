@@ -16,8 +16,6 @@ pg.connect().catch((error) => {
   console.log('Error connecting to database', error)
 })
 
-const firebase = require("firebase")
-
 const app = express()
 const port = process.env.PORT || 4000
 
@@ -34,8 +32,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://zoomchatbot-545fd-default-rtdb.firebaseio.com"
 });
-app.use(cors({ origin: true }));
-const db = admin.firestore();
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Chatbot for Zoom! by Buddhi')
