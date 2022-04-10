@@ -347,9 +347,10 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
+      const msg = req.body.payload.cmd;
       const replay = proccessMessage(msg);
-      const img = getSentiment("sad");
-      const n = getSen(img);
+      const url = getSentiment(msg);
+      const n = getSen(url);
 
       
       request({
@@ -378,8 +379,8 @@ app.post('/unsplash', (req, res) => {
                   "text": replay
                 }
               ],
-              "footer": img,
-              "footer_icon": n
+              "footer": n,
+              "footer_icon": url
             }]
           }
         },
