@@ -196,16 +196,14 @@ app.post('/unsplash', (req, res) => {
     var url;
     if (k > 0) {
       url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
-      return url;
     }
     else if (k == 0) {
       url = "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037";
-      return url;
     }
     else if (k < 0) {
       url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
-      return url;
     }
+    return url;
   }
 
   function getSen(url) {
