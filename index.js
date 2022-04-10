@@ -304,7 +304,7 @@ app.post('/unsplash', (req, res) => {
 
     if (msg == "Bye" || msg == "bye") {
       const n = "text";
-      const url = getSen(n);
+      const img = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
         method: 'POST',
@@ -331,8 +331,8 @@ app.post('/unsplash', (req, res) => {
                   "text": msg
                 }
               ],
-              "footer": "n",
-              "footer_icon": "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png"
+              "footer": n.toString(),
+              "footer_icon": img.toString()
             }]
           }
         },
