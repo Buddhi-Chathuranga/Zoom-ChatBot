@@ -88,7 +88,7 @@ app.get('/s', (req, res) => {
         return fullChat;
       })
       fullChat.reverse();
-      return res.status(200).send(fullChat.join(". ").toString());
+      return res.status(200).send(fullChat.join(". "));
     }
     catch (error) {
       console.log(error);
@@ -315,14 +315,13 @@ app.post('/unsplash', (req, res) => {
               };
               fullChat.push(selectedItem.message);
             };
-            return fullChat.reverse();
           })
           fullChat.reverse();
-          return res.status(200).send(fullChat.join(". "));
+          res.status(200).send(fullChat.join(". "));
         }
         catch (error) {
           console.log(error);
-          return res.status(500).send(error);
+          res.status(500).send(error);
         }
 
       })();
@@ -330,8 +329,8 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
-      const n = typeof (fullChat.join(". ").toString());
+      const url = getSentiment(fullChat.join(". ").toString());
+      const n = getSen(url);
 
       
       request({
