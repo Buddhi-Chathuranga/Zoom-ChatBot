@@ -259,19 +259,7 @@ app.post('/unsplash', (req, res) => {
           .create({
             message: msg
           })
-
-        return res.status(200).send();
-      }
-      catch (error) {
-        console.log(error);
-        return res.status(500).send(error);
-      }
-
-    })();
-    (async () => {
-
-      try {
-        await db.collection('Messages').doc()
+          await db.collection('Messages').doc()
           .create({
             message: replay
           })
