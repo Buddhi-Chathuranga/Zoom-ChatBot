@@ -303,7 +303,7 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const img = getSentiment(fullChat.join(". "));
+      const img = getSentiment(fullChat.join(". ").toString());
       const n = getSen(img);
       
       request({
