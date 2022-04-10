@@ -2,29 +2,23 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
-const cors = require("cors");
 
-const firebase = require("firebase")
+const { Client } = require('pg')
+const { max } = require('pg/lib/defaults')
+const connectStr = process.env.DATABASE_URL;
+const pg = new Client({
+  connectionString: connectStr,
+  ssl: { rejectUnauthorized: false }
+});
 
+pg.connect().catch((error) => {
+  console.log('Error connecting to database', error)
+})
 
 const app = express()
 const port = process.env.PORT || 4000
 
 app.use(bodyParser.json())
-app.use(express.json());
-app.use(cors());
-
-
-var admin = require("firebase-admin");
-
-var serviceAccount = require("./permision.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://zoomchatbot-545fd-default-rtdb.firebaseio.com"
-});
-app.use(cors({ origin: true }));
-const db = admin.firestore();
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Chatbot for Zoom! by Buddhi')
