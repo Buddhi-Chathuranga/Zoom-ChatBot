@@ -330,8 +330,8 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const url = getSentiment(fullChat.join(". ").toString());
-      const n = getSen(url);
+      const url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
+      const n = typeof (fullChat.join(". ").toString());
 
       
       request({
