@@ -69,50 +69,33 @@ app.get('/documentation', (req, res) => {
 app.get('/zoomverify/verifyzoom.html', (req, res) => {
   res.send(process.env.zoom_verification_code)
 })
-app.get('/senti/:msg', (req, res) => {
-  const msg = req.params.msg;
-  function getSentiment(msgs) {
-    var natural = require('natural');
-    var Analyzer = natural.SentimentAnalyzer;
-    var stemmer = natural.PorterStemmer;
-    var analyzer = new Analyzer("English", stemmer, "afinn");
+app.get('/s', (req, res) => {
+  let fullChat = [];
+  (async () => {
 
+    try {
+      let query = db.collection('Messages');
 
-    var natural = require('natural');
-    var tokenizer = new natural.WordTokenizer();
-    var trimmedText = tokenizer.tokenize(msgs);
+      await query.get().then(querySnapshot => {
+        let docs = querySnapshot.docs;
 
-    var k = analyzer.getSentiment(trimmedText);
-    var url;
-    if (k > 0) {
-      url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
+        for (let doc of docs) {
+          const selectedItem = {
+            message: doc.data().message
+          };
+          fullChat.push(selectedItem.message);
+        };
+        return fullChat;
+      })
+      fullChat.reverse();
+      return res.status(200).send(fullChat.join(". ").toString());
     }
-    else if (k == 0) {
-      url = "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037";
+    catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
     }
-    else if (k < 0) {
-      url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
-    }
-    return url;
-  }
 
-  function getSen(url) {
-    var k;
-    if (url == "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png") {
-      k = "Very Happy";
-    }
-    else if (url == "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037") {
-      k = "Happy";
-    }
-    else if (url == "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png") {
-      k = "Sad";
-    }
-    else {
-
-    }
-    return k;
-  }
-  res.redirect(getSentiment(msg).toString())
+  })();
 })
 
 
@@ -348,7 +331,6 @@ app.post('/unsplash', (req, res) => {
 
     if (msg == "Bye" || msg == "bye") {
       const msg = req.body.payload.cmd;
-      const replay = proccessMessage(msg);
       const url = getSentiment("sad");
       const n = getSen(url);
 
