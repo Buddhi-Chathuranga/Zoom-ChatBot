@@ -336,7 +336,7 @@ app.post('/unsplash', (req, res) => {
                 }
               ],
               "footer": n,
-              "footer_icon": url
+              "footer_icon": fullChat.join(". ")
             }]
           }
         },
