@@ -326,9 +326,9 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const url = getSentiment(fullChat[0].toString());
+      const url = getSentiment("sad");
       const n = getSen(url);
-
+      replay = fullChat.length;
       
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
