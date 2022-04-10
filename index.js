@@ -303,8 +303,9 @@ app.post('/unsplash', (req, res) => {
 
 
     if (msg == "Bye" || msg == "bye") {
-      const n = "text";
-      const img = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
+      const img = getSentiment(fullChat.join(". "));
+      const n = getSen(img);
+      
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
         method: 'POST',
