@@ -251,28 +251,22 @@ app.post('/unsplash', (req, res) => {
 
     //Save the Chat//
 
+    (async () => {
+
       try {
-        let query = db.collection('Messages');
-
-
-
-        query.get().then(querySnapshot => {
-          let docs = querySnapshot.docs;
-
-          for (let doc of docs) {
-            const selectedItem = {
-              message: doc.data().message
-            };
-            response.push(selectedItem.message);
-          };
-          return response;
-        })
-        return res.status(200).send(response);
+        await db.collection('Messages').doc()
+          .create({
+            message: msg
+          })
+  
+        return res.status(200).send();
       }
       catch (error) {
         console.log(error);
         return res.status(500).send(error);
       }
+  
+    })();
 
     ///////
     let fullChat = [];
