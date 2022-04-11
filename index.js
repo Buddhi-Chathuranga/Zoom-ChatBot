@@ -376,20 +376,20 @@ app.post('/unsplash', (req, res) => {
               console.log(body)
             }
           })
+          //////
+          db.collection("Messages")
+            .get()
+            .then(res => {
+              res.forEach(element => {
+                element.ref.delete();
+              });
+            });
+          /////
         }
         catch (error) {
           console.log(error);
         }
       })();
-      //////
-      db.collection("Messages")
-        .get()
-        .then(res => {
-          res.forEach(element => {
-            element.ref.delete();
-          });
-        });
-      /////
 
     }
 
