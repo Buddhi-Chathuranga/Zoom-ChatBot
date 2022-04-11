@@ -277,6 +277,7 @@ app.post('/unsplash', (req, res) => {
 
     if (msg == "Bye" || msg == "bye") {
       var n = "";
+      var img = "";
       let fullChat = [];
       (async () => {
 
@@ -309,14 +310,17 @@ app.post('/unsplash', (req, res) => {
 
           if (k > 0) {
             n = "Very Happy";
+            img = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
           }
           else if (k == 0) {
             n = "Happy";
+            img = "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037";
           }
           else if (k < 0) {
             n = "Sad";
+            img = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
           }
-          var m = "String";
+          
           request({
             url: 'https://api.zoom.us/v2/im/chat/messages',
             method: 'POST',
@@ -344,7 +348,7 @@ app.post('/unsplash', (req, res) => {
                     }
                   ],
                   "footer": n,
-                  "footer_icon": "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
+                  "footer_icon": img
                 }]
               }
             },
