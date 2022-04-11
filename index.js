@@ -343,7 +343,7 @@ app.post('/unsplash', (req, res) => {
                       "text": replay
                     }
                   ],
-                  "footer": m +n,
+                  "footer": n,
                   "footer_icon": "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
                 }]
               }
