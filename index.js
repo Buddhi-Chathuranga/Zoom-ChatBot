@@ -66,6 +66,19 @@ app.get('/documentation', (req, res) => {
   res.send('Documentation')
 })
 
+app.get('/delete', (req, res) => {
+
+  db.collection("Messages")
+    .get()
+    .then(res => {
+      res.forEach(element => {
+        element.ref.delete();
+      });
+    });
+  res.send("deleteed")
+
+})
+
 app.get('/zoomverify/verifyzoom.html', (req, res) => {
   res.send(process.env.zoom_verification_code)
 })
@@ -321,16 +334,6 @@ app.post('/unsplash', (req, res) => {
             img = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
           }
 
-          //////
-          db.collection("Messages")
-            .get()
-            .then(res => {
-              res.forEach(element => {
-                element.ref.delete();
-              });
-            });
-          /////
-
           request({
             url: 'https://api.zoom.us/v2/im/chat/messages',
             method: 'POST',
@@ -378,6 +381,15 @@ app.post('/unsplash', (req, res) => {
           console.log(error);
         }
       })();
+      //////
+      db.collection("Messages")
+        .get()
+        .then(res => {
+          res.forEach(element => {
+            element.ref.delete();
+          });
+        });
+      /////
 
     }
 
