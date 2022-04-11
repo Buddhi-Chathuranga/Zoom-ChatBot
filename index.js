@@ -321,7 +321,6 @@ app.post('/unsplash', (req, res) => {
         catch (error) {
           console.log(error);
         }
-
       })();
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
