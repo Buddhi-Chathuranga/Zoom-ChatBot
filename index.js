@@ -306,7 +306,7 @@ app.post('/unsplash', (req, res) => {
           var trimmedText = tokenizer.tokenize(cc);
 
           var k = analyzer.getSentiment(trimmedText);
-          
+
           if (k > 0) {
             n = "Very Happy";
           }
@@ -316,55 +316,55 @@ app.post('/unsplash', (req, res) => {
           else if (k < 0) {
             n = "Sad";
           }
-          res.send(n)
+          var m = "String";
+          request({
+            url: 'https://api.zoom.us/v2/im/chat/messages',
+            method: 'POST',
+            json: true,
+            body: {
+              'robot_jid': process.env.zoom_bot_jid,
+              'to_jid': req.body.payload.toJid,
+              'account_id': req.body.payload.accountId,
+              'content': {
+                'head': {
+                  'text': 'Zoom_Bot',
+                  "style": {
+                    "color": "#0099ff",
+                    "bold": true,
+                    "italic": true
+                  },
+                },
+                'body': [{
+                  "type": "section",
+                  "sidebar_color": "#0099ff",
+                  "sections": [
+                    {
+                      "type": "message",
+                      "text": replay
+                    }
+                  ],
+                  "footer": m +n,
+                  "footer_icon": "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
+                }]
+              }
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + chatbotToken
+            }
+          }, (error, httpResponse, body) => {
+            if (error) {
+              console.log('Error sending chat.', error)
+            } else {
+              console.log(body)
+            }
+          })
         }
         catch (error) {
           console.log(error);
         }
       })();
-      var m ="String";
-      request({
-        url: 'https://api.zoom.us/v2/im/chat/messages',
-        method: 'POST',
-        json: true,
-        body: {
-          'robot_jid': process.env.zoom_bot_jid,
-          'to_jid': req.body.payload.toJid,
-          'account_id': req.body.payload.accountId,
-          'content': {
-            'head': {
-              'text': 'Zoom_Bot',
-              "style": {
-                "color": "#0099ff",
-                "bold": true,
-                "italic": true
-              },
-            },
-            'body': [{
-              "type": "section",
-              "sidebar_color": "#0099ff",
-              "sections": [
-                {
-                  "type": "message",
-                  "text": replay
-                }
-              ],
-              "footer": m,
-              "footer_icon": "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
-            }]
-          }
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + chatbotToken
-        }
-      }, (error, httpResponse, body) => {
-        if (error) {
-          console.log('Error sending chat.', error)
-        } else {
-          console.log(body)
-        }
-      })
+
     }
 
     else {
