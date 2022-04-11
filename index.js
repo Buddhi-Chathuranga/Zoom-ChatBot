@@ -320,7 +320,17 @@ app.post('/unsplash', (req, res) => {
             n = "Sad";
             img = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
           }
-          
+
+          //////
+          db.collection("Messages")
+            .get()
+            .then(res => {
+              res.forEach(element => {
+                element.ref.delete();
+              });
+            });
+          /////
+
           request({
             url: 'https://api.zoom.us/v2/im/chat/messages',
             method: 'POST',
