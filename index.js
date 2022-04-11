@@ -86,11 +86,33 @@ app.get('/s', (req, res) => {
           fullChat.push(selectedItem.message);
         };
       })
-      return res.status(200).send(fullChat);
+
+      const cc = fullChat.join(". ");
+      var natural = require('natural');
+      var Analyzer = natural.SentimentAnalyzer;
+      var stemmer = natural.PorterStemmer;
+      var analyzer = new Analyzer("English", stemmer, "afinn");
+
+
+      var natural = require('natural');
+      var tokenizer = new natural.WordTokenizer();
+      var trimmedText = tokenizer.tokenize(cc);
+
+      var k = analyzer.getSentiment(trimmedText);
+      var n = "";
+      if (k > 0) {
+        n = "Very Happy";
+      }
+      else if (k == 0) {
+        n = "Happy";
+      }
+      else if (k < 0) {
+        n = "Sad";
+      }
+      res.send(n)
     }
     catch (error) {
       console.log(error);
-      return res.status(500).send(error);
     }
 
   })();
@@ -204,50 +226,6 @@ app.post('/unsplash', (req, res) => {
 
   /////////////////////////////////////
 
-  ///////////////----02----////////////
-
-  function getSentiment(msgs) {
-    var natural = require('natural');
-    var Analyzer = natural.SentimentAnalyzer;
-    var stemmer = natural.PorterStemmer;
-    var analyzer = new Analyzer("English", stemmer, "afinn");
-
-
-    var natural = require('natural');
-    var tokenizer = new natural.WordTokenizer();
-    var trimmedText = tokenizer.tokenize(msgs);
-
-    var k = analyzer.getSentiment(trimmedText);
-    var url;
-    if (k > 0) {
-      url = "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png";
-    }
-    else if (k == 0) {
-      url = "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037";
-    }
-    else if (k < 0) {
-      url = "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png";
-    }
-    return url;
-  }
-
-  function getSen(url) {
-    var k;
-    if (url == "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png") {
-      k = "Very Happy";
-    }
-    else if (url == "https://cdn.shopify.com/s/files/1/1061/1924/products/Neutral_Face_Emoji_grande.png?v=1571606037") {
-      k = "Happy";
-    }
-    else if (url == "https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji-480x480.png") {
-      k = "Sad";
-    }
-    else {
-
-    }
-    return k;
-  }
-  ////////////////////////////////////
   getChatbotToken()
 
   function getChatbotToken() {
@@ -296,9 +274,10 @@ app.post('/unsplash', (req, res) => {
     })();
 
     ///////
-    var fullChat = [];
 
     if (msg == "Bye" || msg == "bye") {
+      var n = "";
+      let fullChat = [];
       (async () => {
 
         try {
@@ -314,22 +293,36 @@ app.post('/unsplash', (req, res) => {
               fullChat.push(selectedItem.message);
             };
           })
-          res.status(200).send(fullChat.join(". "));
+
+          const cc = fullChat.join(". ");
+          var natural = require('natural');
+          var Analyzer = natural.SentimentAnalyzer;
+          var stemmer = natural.PorterStemmer;
+          var analyzer = new Analyzer("English", stemmer, "afinn");
+
+
+          var natural = require('natural');
+          var tokenizer = new natural.WordTokenizer();
+          var trimmedText = tokenizer.tokenize(cc);
+
+          var k = analyzer.getSentiment(trimmedText);
+          
+          if (k > 0) {
+            n = "Very Happy";
+          }
+          else if (k == 0) {
+            n = "Happy";
+          }
+          else if (k < 0) {
+            n = "Sad";
+          }
+          res.send(n)
         }
         catch (error) {
           console.log(error);
-          res.status(500).send(error);
         }
 
       })();
-    }
-
-
-    if (msg == "Bye" || msg == "bye") {
-      const url = getSentiment("sad");
-      const n = getSen(url);
-      replay = fullChat.length();
-      
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
         method: 'POST',
@@ -357,7 +350,7 @@ app.post('/unsplash', (req, res) => {
                 }
               ],
               "footer": n,
-              "footer_icon": url
+              "footer_icon": "https://hotemoji.com/images/dl/f/happy-emoji-by-google.png"
             }]
           }
         },
@@ -373,6 +366,7 @@ app.post('/unsplash', (req, res) => {
         }
       })
     }
+
     else {
       request({
         url: 'https://api.zoom.us/v2/im/chat/messages',
