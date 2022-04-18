@@ -38,7 +38,7 @@ app.use(cors({ origin: true }));
 const db = admin.firestore();
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the Chatbot for Zoom! by Buddhi')
+  res.send('Welcome to the Chatbot for Zoom by Buddhi   hi')
 })
 
 app.get('/test/:msg', (req, res) => {
